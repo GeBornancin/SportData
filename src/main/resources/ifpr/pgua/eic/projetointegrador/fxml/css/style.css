@@ -1,0 +1,24 @@
+.text-field{
+    -fx-background-color: #c7f2d4;
+}
+
+.root{
+    -fx-background-color: #015351;
+}
+
+.button{
+    -fx-text-fill: #c7f2d4;
+    -fx-background-color: #262d40;
+}
+
+.label {
+    -fx-font-size: 10px;
+    -fx-text-fill: #c7f2d4;
+}
+
+.hyperlink {
+    -fx-text-fill: #c7f2d4;
+}
+.sportdata{
+    -fx-font-size: 100px;
+}

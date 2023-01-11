@@ -8,27 +8,27 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import ifpr.pgua.eic.projetointegrador.controllers.TelaCadastro;
+import ifpr.pgua.eic.projetointegrador.controllers.TelaLogin;
 import ifpr.pgua.eic.projetointegrador.controllers.TelaPrincipal;
 import ifpr.pgua.eic.projetointegrador.model.FabricaConexoes;
 import ifpr.pgua.eic.projetointegrador.utils.Navigator.BaseAppNavigator;
 import ifpr.pgua.eic.projetointegrador.utils.Navigator.ScreenRegistryFXML;
-
 
 /**
  * JavaFX App
  */
 public class App extends BaseAppNavigator {
 
-
-    //DEFINIR A FABRICA DE CONEXÕES, DAOS e REPOSITÓRIOS
+    // DEFINIR A FABRICA DE CONEXÕES, DAOS e REPOSITÓRIOS
 
     @Override
     public void init() throws Exception {
         // TODO Auto-generated method stub
         super.init();
-        
-        //INSTANCIAR FABRICA, DAOS E REPOSITÓRIOS
-    
+
+        // INSTANCIAR FABRICA, DAOS E REPOSITÓRIOS
+
     }
 
     @Override
@@ -36,8 +36,6 @@ public class App extends BaseAppNavigator {
         super.stop();
 
     }
-
-
 
     @Override
     public String getHome() {
@@ -53,11 +51,10 @@ public class App extends BaseAppNavigator {
 
     @Override
     public void registrarTelas() {
-        registraTela("PRINCIPAL", new ScreenRegistryFXML(getClass(), "fxml/principal.fxml", (o)->new TelaPrincipal()));
-        
-        //REGISTRAR AS OUTRAS TELAS
-
+        registraTela("PRINCIPAL",new ScreenRegistryFXML(getClass(), "fxml/principal.fxml", (o) -> new TelaPrincipal()));
+        registraTela("LOGIN", new ScreenRegistryFXML(getClass(), "fxml/login.fxml", (o) -> new TelaLogin()));
+        registraTela("CADASTRO", new ScreenRegistryFXML(getClass(), "fxml/cadastro.fxml", (o) -> new TelaCadastro()));
+        // REGISTRAR AS OUTRAS TELAS
     }
-
 
 }
