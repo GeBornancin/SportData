@@ -15,7 +15,7 @@
       prefWidth="600.0"
       xmlns="http://javafx.com/javafx/19"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="ifpr.pgua.eic.projetointegrador.controllers.TelaCadastro"
+      fx:controller="ifpr.pgua.eic.projetointegrador.controllers.TelaCadastroAluno"
       stylesheets="@css/style.css"
       styleClass="root">
 

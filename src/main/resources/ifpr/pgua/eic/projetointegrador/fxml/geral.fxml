@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+
+<BorderPane prefHeight="768" 
+            prefWidth="1366"
+            
+      xmlns="http://javafx.com/javafx/19"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ifpr.pgua.eic.projetointegrador.controllers.TelaGeral"
+      stylesheets="@css/style.css"
+      styleClass="root">
+
+      <left>
+      
+            
+            
+      
+            <Button text="Emprestimo" prefWidth="300"/>
+            <Button text="Aluno" prefWidth="300"/>
+
+            <Button onAction="#carregaTelaLogin" text="Voltar" prefWidth="300"/>
+            
+      </left>
+      
+        
+</BorderPane>

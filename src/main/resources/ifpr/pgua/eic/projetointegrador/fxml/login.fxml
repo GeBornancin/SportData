@@ -24,10 +24,10 @@
       <Label  text="SportData" styleClass="sportdata" />
       <TextField maxWidth="300" promptText="C.P.F" BorderPane.alignment="CENTER" />
       <TextField maxWidth="300" promptText="Senha" BorderPane.alignment="CENTER"/>
-      <Button text="Entrar" prefWidth="300"/>
+      <Button onAction="#carregaTelaGeral" text="Entrar" prefWidth="300"/>
       <HBox alignment="center" >
             <Label text="Não tem uma conta?"/>
-            <Hyperlink onAction="#carregaTelaCadastro" prefHeight="20.0" prefWidth="100.0" text="Cadastrar"  /> 
+            <Hyperlink onAction="#carregaTelaCadastroAluno" prefHeight="20.0" prefWidth="100.0" text="Cadastrar"  /> 
       
       
       </HBox>

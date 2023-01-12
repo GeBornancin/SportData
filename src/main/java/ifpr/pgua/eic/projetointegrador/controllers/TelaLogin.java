@@ -7,8 +7,13 @@ import javafx.fxml.FXML;
 public class TelaLogin {
 
     @FXML
-    private void carregaTelaCadastro(){
-        App.changeScreenRegion("CADASTRO", BorderPaneRegion.CENTER);
+    private void carregaTelaCadastroAluno(){
+        App.changeScreenRegion("CADASTROALUNO", BorderPaneRegion.CENTER);
     } 
+
+    @FXML
+    private void carregaTelaGeral(){
+        App.changeScreenRegion("GERAL", BorderPaneRegion.CENTER);
+    }
     
 }
