@@ -9,20 +9,20 @@
 <?import javafx.geometry.Insets?>
 
 
-<BorderPane prefHeight="768" 
+<BorderPane prefHeight="800" 
             prefWidth="1366"
             xmlns="http://javafx.com/javafx/18"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ifpr.pgua.eic.projetointegrador.controllers.TelaPrincipal"
-            stylesheets="@css/style.css"
-            styleClass="root"
+            
+           
             >
 
    <center>
 
       <VBox alignment="CENTER" spacing="10.0">
 
-         <Button onAction="#carregaTelaLogin" prefWidth="1366" prefHeight="768"  text="Pressione ENTER para acessar"/>
+         <Button onAction="#carregaTelaLogin" prefWidth="1366" prefHeight="800"  text="Pressione ENTER para acessar"/>
       
       </VBox>
 

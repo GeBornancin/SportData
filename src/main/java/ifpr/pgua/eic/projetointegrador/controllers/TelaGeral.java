@@ -10,5 +10,9 @@ public class TelaGeral{
     private void carregaTelaLogin(){
         App.changeScreenRegion("LOGIN", BorderPaneRegion.CENTER);
     } 
+    @FXML
+    private void carregaTelaAdmin(){
+        App.changeScreenRegion("ADMIN", BorderPaneRegion.CENTER);
+    } 
     
 }

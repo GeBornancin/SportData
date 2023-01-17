@@ -16,7 +16,7 @@
       xmlns="http://javafx.com/javafx/19"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="ifpr.pgua.eic.projetointegrador.controllers.TelaLogin"
-      stylesheets="@css/style.css"
+      stylesheets="@css/login.css"
       styleClass="root"
       >
       

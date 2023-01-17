@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-
+import ifpr.pgua.eic.projetointegrador.controllers.TelaAdmin;
 import ifpr.pgua.eic.projetointegrador.controllers.TelaCadastroAluno;
 import ifpr.pgua.eic.projetointegrador.controllers.TelaGeral;
 import ifpr.pgua.eic.projetointegrador.controllers.TelaLogin;
@@ -57,6 +57,7 @@ public class App extends BaseAppNavigator {
         registraTela("LOGIN", new ScreenRegistryFXML(getClass(), "fxml/login.fxml", (o) -> new TelaLogin()));
         registraTela("CADASTROALUNO", new ScreenRegistryFXML(getClass(), "fxml/cadastroAluno.fxml", (o) -> new TelaCadastroAluno()));
         registraTela("GERAL", new ScreenRegistryFXML(getClass(), "fxml/geral.fxml", (o) -> new TelaGeral()));
+        registraTela("ADMIN", new ScreenRegistryFXML(getClass(), "fxml/admin.fxml", (o) -> new TelaAdmin()));
         // REGISTRAR AS OUTRAS TELAS
     }
 
