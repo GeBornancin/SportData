@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+
+<BorderPane prefHeight="800" 
+            prefWidth="1366"
+            xmlns="http://javafx.com/javafx/18"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ifpr.pgua.eic.sportdata.controllers.TelaPrincipal"
+            
+           
+            >
+
+   <center>
+
+      <VBox alignment="CENTER" spacing="10.0">
+
+         <Button onAction="#carregaTelaLogin" prefWidth="1366" prefHeight="800"  text="Pressione ENTER para acessar"/>
+      
+      </VBox>
+
+   </center>
+
+</BorderPane>

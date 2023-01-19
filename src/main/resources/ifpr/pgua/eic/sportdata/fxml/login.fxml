@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+
+<VBox alignment="center"
+      spacing="10.0"
+      prefHeight="400.0"
+      prefWidth="600.0"
+      xmlns="http://javafx.com/javafx/19"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ifpr.pgua.eic.sportdata.controllers.TelaLogin"
+      stylesheets="@css/login.css"
+      styleClass="root"
+      >
+      
+
+      <Label  text="SportData" styleClass="sportdata" />
+      <TextField maxWidth="300" promptText="C.P.F" BorderPane.alignment="CENTER" />
+      <TextField maxWidth="300" promptText="Senha" BorderPane.alignment="CENTER"/>
+      <Button onAction="#carregaTelaGeral" text="Entrar" prefWidth="300"/>
+      <HBox alignment="center" >
+            <Label text="Não tem uma conta?"/>
+            <Hyperlink onAction="#carregaTelaCadastroAluno" prefHeight="20.0" prefWidth="100.0" text="Cadastrar"  /> 
+      
+      
+      </HBox>
+   
+</VBox>
+
