@@ -3,18 +3,27 @@ package ifpr.pgua.eic.sportdata.model.entities;
 public class Aluno {
 
     private int idAluno;
-    private int cpf;
+    private String cpf;
     private String nomeAluno;
     private String turma;
-    private Integer senha;
+    private String senha;
     
-    public Aluno(int idAluno,int cpf, String nomeAluno, String turma, int senha) {
+    public Aluno(int idAluno, String cpf, String nomeAluno, String turma, String senha) {
         this.idAluno = idAluno;
         this.cpf = cpf;
         this.nomeAluno = nomeAluno;
         this.turma = turma;
         this.senha = senha;
     }
+    
+
+    public Aluno(String cpf, String nomeAluno, String turma, String senha) {
+        this.cpf = cpf;
+        this.nomeAluno = nomeAluno;
+        this.turma = turma;
+        this.senha = senha;
+    }
+
 
     public int getIdAluno() {
         return idAluno;
@@ -24,11 +33,11 @@ public class Aluno {
         this.idAluno = idAluno;
     }
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
@@ -48,14 +57,13 @@ public class Aluno {
         this.turma = turma;
     }
 
-    public int getSenha() {
+    public String getSenha() {
         return senha;
     }
 
-    public void setSenha(int senha) {
+    public void setSenha(String senha) {
         this.senha = senha;
     }
-
     
     
 

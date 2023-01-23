@@ -21,13 +21,13 @@
 
       
       <Label text="SportData"/>
-      <TextField maxWidth="300" promptText="C.P.F" BorderPane.alignment="CENTER" />
-      <TextField maxWidth="300" promptText="E-mail" BorderPane.alignment="CENTER" />
-      <TextField maxWidth="300" promptText="Turma" BorderPane.alignment="CENTER" />
-      <TextField maxWidth="300" promptText="Senha" BorderPane.alignment="CENTER" />
-      <TextField maxWidth="300" promptText="Confirmar Senha" BorderPane.alignment="CENTER" />
+      <TextField fx:id="tfCpf" maxWidth="300" promptText="C.P.F" BorderPane.alignment="CENTER" />
+      <TextField fx:id="tfNomeAluno" maxWidth="300" promptText="Nome" BorderPane.alignment="CENTER" />
+      <TextField fx:id="tfTurma" maxWidth="300" promptText="Turma" BorderPane.alignment="CENTER" />
+      <TextField fx:id="tfSenha" maxWidth="300" promptText="Senha" BorderPane.alignment="CENTER" />
+      
 
-      <Button text="Cadastrar" prefWidth="300"/>
+      <Button text="Cadastrar"  onAction="#cadastrar" prefWidth="300"/>
       <Button onAction="#carregaTelaLogin" text="Voltar" prefWidth="300"/>
         
 </VBox>

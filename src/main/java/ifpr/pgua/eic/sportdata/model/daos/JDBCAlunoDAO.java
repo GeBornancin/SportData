@@ -24,13 +24,12 @@ public class JDBCAlunoDAO implements AlunoDAO {
 		try{
             Connection con = fabricaConexoes.getConnection();
             
-            PreparedStatement pstm = con.prepareStatement("INSERT INTO alunos(idAluno, cpf,nomeAluno,turma,senha) VALUES (?,?,?,?)");
+            PreparedStatement pstm = con.prepareStatement("INSERT INTO pi_aluno(cpf,nomeAluno,turma,senha) VALUES (?,?,?,?)");
 
-            pstm.setInt(1, aluno.getIdAluno());
-            pstm.setInt(2, aluno.getCpf());
-            pstm.setString(3, aluno.getNomeAluno());
-            pstm.setString(4, aluno.getTurma());
-            pstm.setInt(5, aluno.getSenha());
+            pstm.setString(1, aluno.getCpf());
+            pstm.setString(2, aluno.getNomeAluno());
+            pstm.setString(3, aluno.getTurma());
+            pstm.setString(4, aluno.getSenha());
 
             pstm.execute();
 
@@ -45,7 +44,7 @@ public class JDBCAlunoDAO implements AlunoDAO {
 	}
 
 	@Override
-	public Result update(int cpf, Aluno aluno) {
+	public Result update(String cpf, Aluno aluno) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -53,10 +52,10 @@ public class JDBCAlunoDAO implements AlunoDAO {
     private Aluno buildFrom(ResultSet result) throws SQLException{
         
         int idAluno = result.getInt("idAluno");
-        int cpf = result.getInt("cpf");
+        String cpf = result.getString("cpf");
         String nomeAluno = result.getString("nomeAluno");
         String turma = result.getString("turma");
-        int senha = result.getInt("senha");
+        String senha = result.getString("senha");
         
         Aluno aluno = new Aluno(idAluno, cpf, nomeAluno, turma, senha);
 
@@ -65,8 +64,30 @@ public class JDBCAlunoDAO implements AlunoDAO {
 
 	@Override
 	public List<Aluno> listAll() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Aluno> alunos = new ArrayList<>();
+		try{
+            Connection con = fabricaConexoes.getConnection();
+
+            PreparedStatement pstm = con.prepareStatement("SELECT * FROM pi_aluno");
+
+            ResultSet rs = pstm.executeQuery();
+
+            while(rs.next()){
+                Aluno aluno = buildFrom(rs);
+                alunos.add(aluno);
+            }
+
+            rs.close();
+            pstm.close();
+            con.close();
+
+            return alunos;
+
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+       
 	}
 
 	@Override
@@ -77,7 +98,7 @@ public class JDBCAlunoDAO implements AlunoDAO {
             //criando uma conexão
             Connection con = fabricaConexoes.getConnection(); 
             
-            PreparedStatement pstm = con.prepareStatement("SELECT * FROM alunos WHERE idAluno=?");
+            PreparedStatement pstm = con.prepareStatement("SELECT * FROM pi_aluno WHERE idAluno=?");
 
             pstm.setInt(1, idAluno);
 
@@ -99,8 +120,36 @@ public class JDBCAlunoDAO implements AlunoDAO {
         return aluno;
 	}
 
+    @Override
+    public Aluno getAlunoFromEmprestimo(int idEmprestimo) {
+        Aluno a = null;
+        try{
+
+            Connection con = fabricaConexoes.getConnection();
+
+            PreparedStatement pstm = con.prepareStatement("SELECT idAluno FROM pi_emprestimo WHERE idAluno=?");
+
+            pstm.setInt(1, idEmprestimo);
+
+            ResultSet resultSetIdAluno = pstm.executeQuery();
+            resultSetIdAluno.next();
+
+            int idAluno = resultSetIdAluno.getInt("idAluno");
+
+            a = getByIdAluno(idAluno);
+
+            resultSetIdAluno.close();
+            pstm.close();
+            con.close();
+
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return a;
+    }
+ 
 	@Override
-	public Result delete(int cpf) {
+	public Result delete(int idAluno) {
 		// TODO Auto-generated method stub
 		return null;
 	}

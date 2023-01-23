@@ -4,48 +4,59 @@ import java.time.LocalDate;
 
 public class Emprestimo {
     
-    private int id;
-    private Aluno cpf;
-    private Material nomeMaterial;
+    private int idEmprestimo;
+    private Aluno idAluno;
+    private Material idMaterial;
     private LocalDate dataEmprestimo;
-    
-    public Emprestimo(int id, Aluno cpf, Material nomeMaterial, LocalDate dataEmprestimo) {
-        this.id = id;
-        this.cpf = cpf;
-        this.nomeMaterial = nomeMaterial;
+
+
+    public Emprestimo(int idEmprestimo, Aluno idAluno, Material idMaterial, LocalDate dataEmprestimo) {
+        this.idEmprestimo = idEmprestimo;
+        this.idAluno = idAluno;
+        this.idMaterial = idMaterial;
         this.dataEmprestimo = dataEmprestimo;
     }
 
-    public int getId() {
-        return id;
+
+    public int getIdEmprestimo() {
+        return idEmprestimo;
     }
 
-    public void setId(int id) {
-        this.id = id;
+
+    public void setIdEmprestimo(int idEmprestimo) {
+        this.idEmprestimo = idEmprestimo;
     }
 
-    public Aluno getCpf() {
-        return cpf;
+
+    public Aluno getIdAluno() {
+        return idAluno;
     }
 
-    public void setCpf(Aluno cpf) {
-        this.cpf = cpf;
+
+    public void setIdAluno(Aluno idAluno) {
+        this.idAluno = idAluno;
     }
 
-    public Material getNomeMaterial() {
-        return nomeMaterial;
+
+    public Material getIdMaterial() {
+        return idMaterial;
     }
 
-    public void setNomeMaterial(Material nomeMaterial) {
-        this.nomeMaterial = nomeMaterial;
+
+    public void setIdMaterial(Material idMaterial) {
+        this.idMaterial = idMaterial;
     }
+
 
     public LocalDate getDataEmprestimo() {
         return dataEmprestimo;
     }
 
+
     public void setDataEmprestimo(LocalDate dataEmprestimo) {
         this.dataEmprestimo = dataEmprestimo;
     }
+    
 
+    
 }
