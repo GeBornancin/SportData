@@ -35,20 +35,20 @@
             </HBox>
             <HBox layoutX="708.0" layoutY="25.0" prefHeight="221.0" prefWidth="640.0">
                <children>
-                  <TableView prefHeight="221.0" prefWidth="639.0">
+                  <TableView fx:id="tbAlunos" editable="true" prefHeight="221.0" prefWidth="639.0" >
                      <columns>
-                        <TableColumn prefWidth="287.0" text="Aluno" />
-                        <TableColumn prefWidth="149.0" text="C.P.F" />
-                        <TableColumn minWidth="0.0" prefWidth="101.0" text="Turma" />
-                        <TableColumn minWidth="0.0" prefWidth="101.0" text="Senha" />
+                        <TableColumn fx:id="tbcNomeAluno" prefWidth="287.0" text="Aluno" />
+                        <TableColumn fx:id="tbcCpf"  prefWidth="149.0" text="C.P.F" />
+                        <TableColumn fx:id="tbcTurma" minWidth="0.0" prefWidth="101.0" text="Turma" />
+                        <TableColumn fx:id="tbcSenha" minWidth="0.0" prefWidth="101.0" text="Senha" />
                      </columns>
                   </TableView>
                </children>
             </HBox>
             <Button layoutX="14.0" layoutY="534.0" mnemonicParsing="false" onAction="#carregaTelaGeral" prefHeight="25.0" prefWidth="65.0" text="Voltar" />
             <Button layoutX="1235.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Excluir" />
-            <Button layoutX="1101.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Editar" />
-            <Button layoutX="313.0" layoutY="534.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Editar" />
+            <Button layoutX="1101.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Editar" onAction="#atualizar"/>
+            <Button layoutX="313.0" layoutY="534.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Editar"  />
             <Button layoutX="464.0" layoutY="534.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Excluir" />
          </children>
       </Pane>

@@ -148,12 +148,22 @@ public class JDBCAlunoDAO implements AlunoDAO {
         return a;
     }
  
-	@Override
-	public Result delete(int idAluno) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        @Override
+        public Result deleteAluno(int idAluno) {
+        try{
 
-	
-    
+            Connection con = fabricaConexoes.getConnection(); 
+            PreparedStatement pstm = con.prepareStatement("DELETE FROM pi_aluno WHERE idAluno=?");
+            
+            pstm.close();
+            con.close();
+                
+            }catch(SQLException e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        return null;
+    }
+
+
 }

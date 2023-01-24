@@ -59,9 +59,17 @@ public class TelaCadastroAlunoViewModel {
 
         repository.adicionarAluno(cpf, nomeAluno, turma, senha);
         Result.fail("teste");
-
+        limpar();
         
        }
+
+    public void limpar() {
+        cpfProperty.setValue("");
+        nomeAlunoProperty.setValue("");
+        turmaProperty.setValue("");
+        senhaProperty.setValue("");
+
+    }
 
 
 }

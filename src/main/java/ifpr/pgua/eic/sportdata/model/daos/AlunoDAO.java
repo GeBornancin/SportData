@@ -11,7 +11,7 @@ public interface AlunoDAO {
     List<Aluno> listAll();
     Aluno getByIdAluno(int idAluno);
     Aluno getAlunoFromEmprestimo(int idEmprestimo);
-    Result delete(int idAluno);
+    Result deleteAluno(int idAluno);
     
 }
 

@@ -36,9 +36,31 @@ public class AlunosRepository {
 
     }
 
+    public Result atualizarAlunos(String cpf, String NovoCpf, String NovoNomeAluno, String NovaTurma, String NovaSenha){
 
-    public List<Aluno> getAlunos(){
+
+        Optional<Aluno> busca = alunos.stream().filter((alu)->alu.getCpf().equals(cpf)).findFirst();
+    
+        if(busca.isPresent()){
+            Aluno aluno = busca.get();
+            aluno.setCpf(NovoCpf);
+            aluno.setNomeAluno(NovoNomeAluno);
+            aluno.setTurma(NovaTurma);
+            aluno.setSenha(NovaSenha);
+
+            return Result.success("Aluno Atualizado com sucesso");
+        }
+        return Result.fail("Aluno não encontrado!");
+    }
+
+    public List<Aluno> Listar(){
         alunos = dao.listAll();
         return Collections.unmodifiableList(alunos);
+    }
+
+    public Result deleteAluno(int idAluno){
+
+        return dao.deleteAluno(idAluno);
+
     }
 }

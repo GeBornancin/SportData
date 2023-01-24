@@ -53,6 +53,10 @@ public class TelaCadastroAluno  extends BaseController implements Initializable{
     private void cadastrar(){
         viewModel.cadastrar();
     }
-
+    
+    @FXML
+    private void limpar(){
+        viewModel.limpar();
+    }
    
 }

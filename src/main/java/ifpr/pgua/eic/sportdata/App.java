@@ -15,6 +15,7 @@ import ifpr.pgua.eic.sportdata.controllers.TelaCadastroAluno;
 import ifpr.pgua.eic.sportdata.controllers.TelaGeral;
 import ifpr.pgua.eic.sportdata.controllers.TelaLogin;
 import ifpr.pgua.eic.sportdata.controllers.TelaPrincipal;
+import ifpr.pgua.eic.sportdata.controllers.ViewModels.TelaAdminViewModel;
 import ifpr.pgua.eic.sportdata.controllers.ViewModels.TelaCadastroAlunoViewModel;
 import ifpr.pgua.eic.sportdata.model.FabricaConexoes;
 import ifpr.pgua.eic.sportdata.model.repositories.AlunosRepository;
@@ -41,6 +42,7 @@ public class App extends BaseAppNavigator {
         alunoDao = new JDBCAlunoDAO(FabricaConexoes.getInstance());
         alunosRepository = new AlunosRepository(alunoDao);
 
+        alunosRepository.Listar();
     }
 
     @Override
@@ -69,7 +71,7 @@ public class App extends BaseAppNavigator {
         registraTela("CADASTROALUNO",
                 new ScreenRegistryFXML(getClass(), "fxml/cadastroAluno.fxml", (o) -> new TelaCadastroAluno(new TelaCadastroAlunoViewModel(alunosRepository))));
         registraTela("GERAL", new ScreenRegistryFXML(getClass(), "fxml/geral.fxml", (o) -> new TelaGeral()));
-        registraTela("ADMIN", new ScreenRegistryFXML(getClass(), "fxml/admin.fxml", (o) -> new TelaAdmin()));
+        registraTela("ADMIN", new ScreenRegistryFXML(getClass(), "fxml/admin.fxml", (o) -> new TelaAdmin(new TelaAdminViewModel(alunosRepository, null))));
         // REGISTRAR AS OUTRAS TELAS
     }
 
