@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-import javax.swing.table.TableColumnModel;
+
 
 import ifpr.pgua.eic.sportdata.App;
 import ifpr.pgua.eic.sportdata.controllers.ViewModels.AlunoRow;
@@ -15,8 +15,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
+
 
 public class TelaAdmin extends BaseController implements Initializable {
 
@@ -24,6 +26,9 @@ public class TelaAdmin extends BaseController implements Initializable {
     private void carregaTelaGeral(){
         App.changeScreenRegion("GERAL", BorderPaneRegion.CENTER);
     }
+
+    @FXML 
+    private TableView<AlunoRow> tbAlunos;
 
     @FXML
     private TableColumn<AlunoRow, String> tbcNomeAluno;
@@ -37,17 +42,24 @@ public class TelaAdmin extends BaseController implements Initializable {
     @FXML
     private TableColumn<AlunoRow, String> tbcSenha;
 
+    @FXML
+    private TextField tfNomeAluno;
 
+    @FXML
+    private TextField tfCpf;
+
+    @FXML
+    private TextField tfTurma;
+
+    @FXML 
+    private TextField tfSenha;
+    
     @FXML 
     private Button btEditarAluno;
 
     @FXML
     private Button btExcluirAluno;
     
-
-    @FXML 
-    private TableView<AlunoRow> tbAlunos;
-
     @FXML 
     private TelaAdminViewModel viewModel;
 
@@ -63,29 +75,37 @@ public class TelaAdmin extends BaseController implements Initializable {
         
     
         tbcNomeAluno.setCellValueFactory(new PropertyValueFactory<>("nomeAluno"));
-        tbcNomeAluno.setCellFactory(TextFieldTableCell.forTableColumn());
-        // tbcNomeAluno.setOnEditCommit();
-
         tbcCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
-        tbcCpf.setCellFactory(TextFieldTableCell.forTableColumn());
-
-        
         tbcTurma.setCellValueFactory(new PropertyValueFactory<>("turma"));
-        tbcTurma.setCellFactory(TextFieldTableCell.forTableColumn());
-
         tbcSenha.setCellValueFactory(new PropertyValueFactory<>("senha"));
-        tbcSenha.setCellFactory(TextFieldTableCell.forTableColumn());
-
 
         tbAlunos.setItems(viewModel.getAlunos());
 
         viewModel.selecionadoProperty().bind(tbAlunos.getSelectionModel().selectedItemProperty());
 
+        tfNomeAluno.textProperty().bindBidirectional(viewModel.nomeAlunoProperty());
+        tfNomeAluno.editableProperty().bind(viewModel.podeEditarProperty());
+
+        tfCpf.textProperty().bindBidirectional(viewModel.cpfProperty());
+        tfCpf.editableProperty().bind(viewModel.podeEditarProperty());
+
+        tfTurma.textProperty().bindBidirectional(viewModel.turmaProperty());
+        tfTurma.editableProperty().bind(viewModel.podeEditarProperty());
+        
+        tfSenha.textProperty().bindBidirectional(viewModel.senhaProperty());
+        tfSenha.editableProperty().bind(viewModel.podeEditarProperty());
+
+        // btEditarAluno.textProperty().bind(viewModel.operacaoProperty());
     }
 
     @FXML
-    private void atualizar(){
+    private void atualizar(MouseEvent event){
+        if(event.getClickCount() == 2)
         viewModel.atualizar();
+    }
+
+    public void limpar(){
+        viewModel.limpar();
     }
 
 }
