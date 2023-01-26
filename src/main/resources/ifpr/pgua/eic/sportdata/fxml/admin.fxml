@@ -23,13 +23,13 @@
             <TextField fx:id="tfTurma" layoutX="1089.0" layoutY="36.0" prefHeight="25.0" prefWidth="195.0" />
             <TextField fx:id="tfCpf" layoutX="776.0" layoutY="90.0" prefHeight="25.0" prefWidth="195.0" />
             <TextField fx:id="tfSenha" layoutX="1089.0" layoutY="90.0" prefHeight="25.0" prefWidth="195.0" />
-            <Button layoutX="860.0" layoutY="134.0" mnemonicParsing="false" onAction="#atualizar" prefHeight="25.0" prefWidth="111.0" text="Editar" />
+            <Button fx:id="btEditarAluno" layoutX="860.0" layoutY="134.0" mnemonicParsing="false" onAction="#editar" prefHeight="25.0" prefWidth="111.0" text="Editar" />
             <Label layoutX="713.0" layoutY="40.0" text="Aluno:" />
             <Label layoutX="713.0" layoutY="94.0" text="C.P.F:" />
             <Label layoutX="1042.0" layoutY="40.0" text="Turma:" />
             <Label layoutX="1042.0" layoutY="94.0" text="Senha:" />
             <Button layoutX="329.0" layoutY="134.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Editar" />
-            <Button layoutX="1173.0" layoutY="134.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Limpar" />
+            <Button layoutX="1173.0" layoutY="134.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Limpar" onAction="#limpar"/>
          </children>
       </Pane>
       <Pane prefHeight="575.0" prefWidth="1366.0">
@@ -46,7 +46,7 @@
             </HBox>
             <HBox layoutX="708.0" layoutY="25.0" prefHeight="221.0" prefWidth="640.0">
                <children>
-                  <TableView fx:id="tbAlunos" editable="false" prefHeight="221.0" prefWidth="639.0">
+                  <TableView fx:id="tbAlunos" editable="false" prefHeight="221.0" prefWidth="639.0" onMouseClicked="#atualizar">
                      <columns>
                         <TableColumn fx:id="tbcNomeAluno" prefWidth="287.0" text="Aluno" />
                         <TableColumn fx:id="tbcCpf" prefWidth="149.0" text="C.P.F" />
@@ -58,7 +58,7 @@
             </HBox>
             <Button layoutX="14.0" layoutY="534.0" mnemonicParsing="false" onAction="#carregaTelaGeral" prefHeight="25.0" prefWidth="65.0" text="Voltar" />
             <Button layoutX="464.0" layoutY="534.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Excluir" />
-            <Button layoutX="1223.0" layoutY="257.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Excluir" />
+            <Button fx:id="btExcluirAluno" layoutX="1223.0" layoutY="257.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Excluir" onAction="#excluir"/>
          </children>
       </Pane>
    </children>

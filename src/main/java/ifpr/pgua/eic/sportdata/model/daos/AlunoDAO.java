@@ -7,7 +7,7 @@ import ifpr.pgua.eic.sportdata.model.results.Result;
 public interface AlunoDAO {
 
     Result create(Aluno aluno);
-    Result update(String cpf, Aluno aluno);
+    Result update(Aluno aluno);
     List<Aluno> listAll();
     Aluno getByIdAluno(int idAluno);
     Aluno getAlunoFromEmprestimo(int idEmprestimo);

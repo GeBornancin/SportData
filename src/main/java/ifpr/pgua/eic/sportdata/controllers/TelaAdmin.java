@@ -84,18 +84,15 @@ public class TelaAdmin extends BaseController implements Initializable {
         viewModel.selecionadoProperty().bind(tbAlunos.getSelectionModel().selectedItemProperty());
 
         tfNomeAluno.textProperty().bindBidirectional(viewModel.nomeAlunoProperty());
-        tfNomeAluno.editableProperty().bind(viewModel.podeEditarProperty());
-
+       
         tfCpf.textProperty().bindBidirectional(viewModel.cpfProperty());
         tfCpf.editableProperty().bind(viewModel.podeEditarProperty());
 
         tfTurma.textProperty().bindBidirectional(viewModel.turmaProperty());
-        tfTurma.editableProperty().bind(viewModel.podeEditarProperty());
         
         tfSenha.textProperty().bindBidirectional(viewModel.senhaProperty());
-        tfSenha.editableProperty().bind(viewModel.podeEditarProperty());
-
-        // btEditarAluno.textProperty().bind(viewModel.operacaoProperty());
+        
+        btEditarAluno.textProperty().bind(viewModel.operacaoProperty());
     }
 
     @FXML
@@ -103,6 +100,17 @@ public class TelaAdmin extends BaseController implements Initializable {
         if(event.getClickCount() == 2)
         viewModel.atualizar();
     }
+
+    @FXML
+    private  void editar(){
+        viewModel.editar();
+    }
+
+    @FXML
+    private void excluir(){
+        viewModel.excluir();
+    }
+
 
     public void limpar(){
         viewModel.limpar();

@@ -47,7 +47,7 @@ public class AlunosRepository {
             aluno.setTurma(NovaTurma);
             aluno.setSenha(NovaSenha);
 
-            return Result.success("Aluno Atualizado com sucesso");
+            return dao.update(aluno);
         }
         return Result.fail("Aluno não encontrado!");
     }

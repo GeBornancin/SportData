@@ -44,9 +44,32 @@ public class JDBCAlunoDAO implements AlunoDAO {
 	}
 
 	@Override
-	public Result update(String cpf, Aluno aluno) {
-		// TODO Auto-generated method stub
-		return null;
+	public Result update(Aluno aluno) {
+        try{
+        Connection con = fabricaConexoes.getConnection();
+
+
+         PreparedStatement pstm = con.prepareStatement("UPDATE pi_aluno SET nomeAluno=?, turma=?, senha=? WHERE cpf=?");
+
+
+        
+        pstm.setString(1, aluno.getNomeAluno());
+        pstm.setString(2, aluno.getTurma());
+        pstm.setString(3, aluno.getSenha());
+        pstm.setString(4, aluno.getCpf());
+
+        pstm.execute();
+
+        pstm.close();
+        con.close();
+
+        return Result.success("Aluno atualizado com sucesso.");
+
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            return Result.fail(e.getMessage());
+        }
+
 	}
 
     private Aluno buildFrom(ResultSet result) throws SQLException{
@@ -59,7 +82,7 @@ public class JDBCAlunoDAO implements AlunoDAO {
         
         Aluno aluno = new Aluno(idAluno, cpf, nomeAluno, turma, senha);
 
-        return aluno;
+        return aluno;   
     }
 
 	@Override
@@ -155,14 +178,20 @@ public class JDBCAlunoDAO implements AlunoDAO {
             Connection con = fabricaConexoes.getConnection(); 
             PreparedStatement pstm = con.prepareStatement("DELETE FROM pi_aluno WHERE idAluno=?");
             
+            pstm.setInt(1, idAluno);
+
+            pstm.execute();
+
             pstm.close();
             con.close();
+
+            return Result.success("apagado");
                 
             }catch(SQLException e){
             System.out.println(e.getMessage());
             return null;
         }
-        return null;
+        
     }
 
 

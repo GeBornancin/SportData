@@ -120,6 +120,21 @@ public class TelaAdminViewModel {
     }
 
 
+    public void editar(){
+        String nome = spNomeAluno.getValue();
+        String cpf = spCpf.getValue();
+        String turma = spTurma.getValue();
+        String senha = spSenha.getValue();
+
+        if(atualizar) {
+            alunosRepository.atualizarAlunos(cpf, nome, turma, senha);
+        }
+
+    updateList();
+    limpar();
+    
+    }
+
     public void atualizar() {
 
         operacao.setValue("Editar");
@@ -130,25 +145,27 @@ public class TelaAdminViewModel {
         spCpf.setValue(aluno.getCpf());
         spTurma.setValue(aluno.getTurma());
         spSenha.setValue(aluno.getSenha());
-
-        String nome = spNomeAluno.getValue();
-        String cpf = spCpf.getValue();
-        String turma = spTurma.getValue();
-        String senha = spSenha.getValue();
-
-        if(atualizar) {
-            alunosRepository.atualizarAlunos(cpf, nome, turma, senha);
-        }
+   
     }
 
-    
+    public void excluir(){
 
+        Aluno aluno = selecionado.get().getAluno();
+        alunosRepository.deleteAluno(aluno.getIdAluno());
+
+        updateList();
+        limpar();
+
+    }
 
     public void limpar() {
-       spCpf.setValue("");
+        spCpf.setValue("");
         spNomeAluno.setValue("");
         spTurma.setValue("");
         spSenha.setValue("");
+        podeEditar.setValue(true);
+        atualizar = false;
+        
 
     }
 
