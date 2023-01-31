@@ -10,6 +10,8 @@ import java.io.IOException;
 
 import ifpr.pgua.eic.sportdata.model.daos.AlunoDAO;
 import ifpr.pgua.eic.sportdata.model.daos.JDBCAlunoDAO;
+import ifpr.pgua.eic.sportdata.model.daos.JDBCMaterialDAO;
+import ifpr.pgua.eic.sportdata.model.daos.MaterialDAO;
 import ifpr.pgua.eic.sportdata.controllers.TelaAdmin;
 import ifpr.pgua.eic.sportdata.controllers.TelaCadastroAluno;
 import ifpr.pgua.eic.sportdata.controllers.TelaGeral;
@@ -19,6 +21,7 @@ import ifpr.pgua.eic.sportdata.controllers.ViewModels.TelaAdminViewModel;
 import ifpr.pgua.eic.sportdata.controllers.ViewModels.TelaCadastroAlunoViewModel;
 import ifpr.pgua.eic.sportdata.model.FabricaConexoes;
 import ifpr.pgua.eic.sportdata.model.repositories.AlunosRepository;
+import ifpr.pgua.eic.sportdata.model.repositories.MateriaisRepository;
 import ifpr.pgua.eic.sportdata.utils.Navigator.BaseAppNavigator;
 import ifpr.pgua.eic.sportdata.utils.Navigator.ScreenRegistryFXML;
 
@@ -31,6 +34,9 @@ public class App extends BaseAppNavigator {
 
     private AlunoDAO alunoDao;
     private AlunosRepository alunosRepository;
+    private MaterialDAO materialDao;
+    private MateriaisRepository materiaisRepository;
+    
 
     @Override
     public void init() throws Exception {
@@ -42,7 +48,11 @@ public class App extends BaseAppNavigator {
         alunoDao = new JDBCAlunoDAO(FabricaConexoes.getInstance());
         alunosRepository = new AlunosRepository(alunoDao);
 
-        alunosRepository.Listar();
+        materialDao = new JDBCMaterialDAO(FabricaConexoes.getInstance());
+        materiaisRepository = new MateriaisRepository(materialDao);
+
+        materiaisRepository.listarMaterial();
+        alunosRepository.listarAluno();
     }
 
     @Override
@@ -71,7 +81,7 @@ public class App extends BaseAppNavigator {
         registraTela("CADASTROALUNO",
                 new ScreenRegistryFXML(getClass(), "fxml/cadastroAluno.fxml", (o) -> new TelaCadastroAluno(new TelaCadastroAlunoViewModel(alunosRepository))));
         registraTela("GERAL", new ScreenRegistryFXML(getClass(), "fxml/geral.fxml", (o) -> new TelaGeral()));
-        registraTela("ADMIN", new ScreenRegistryFXML(getClass(), "fxml/admin.fxml", (o) -> new TelaAdmin(new TelaAdminViewModel(alunosRepository, null))));
+        registraTela("ADMIN", new ScreenRegistryFXML(getClass(), "fxml/admin.fxml", (o) -> new TelaAdmin(new TelaAdminViewModel(alunosRepository, materiaisRepository))));
         // REGISTRAR AS OUTRAS TELAS
     }
 

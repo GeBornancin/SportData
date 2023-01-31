@@ -3,11 +3,9 @@ package ifpr.pgua.eic.sportdata.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
-
-
 import ifpr.pgua.eic.sportdata.App;
 import ifpr.pgua.eic.sportdata.controllers.ViewModels.AlunoRow;
+import ifpr.pgua.eic.sportdata.controllers.ViewModels.MaterialRow;
 import ifpr.pgua.eic.sportdata.controllers.ViewModels.TelaAdminViewModel;
 import ifpr.pgua.eic.sportdata.utils.Navigator.BorderPaneRegion;
 import javafx.fxml.FXML;
@@ -26,6 +24,36 @@ public class TelaAdmin extends BaseController implements Initializable {
     private void carregaTelaGeral(){
         App.changeScreenRegion("GERAL", BorderPaneRegion.CENTER);
     }
+
+    
+
+// MATERIAL
+
+    @FXML
+    private TableView<MaterialRow> tbMateriais;
+    
+    @FXML
+    private TableColumn<MaterialRow, String> tbcNomeMaterial;
+
+    @FXML
+    private TableColumn<MaterialRow, Integer> tbcQuantidade;
+
+    @FXML
+    private TextField tfNomeMaterial;
+
+    @FXML
+    private TextField tfQuantidade;
+
+    @FXML
+    private Button btCadastrarMaterial;
+
+    @FXML
+    private Button btEditarMaterial;
+
+    @FXML
+    private Button btExcluirMaterial;
+
+// ALUNO
 
     @FXML 
     private TableView<AlunoRow> tbAlunos;
@@ -74,6 +102,23 @@ public class TelaAdmin extends BaseController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
         
     
+        //////MATERIAL
+
+        tbcNomeMaterial.setCellValueFactory(new PropertyValueFactory<>("nomeMaterial"));
+        tbcQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
+
+        viewModel.materialSelecionadoProperty().bind(tbMateriais.getSelectionModel().selectedItemProperty());
+       
+        tbMateriais.setItems(viewModel.getMateriais());
+
+        tfNomeMaterial.textProperty().bindBidirectional(viewModel.nomeMaterialProperty());
+        tfNomeMaterial.editableProperty().bind(viewModel.podeEditarProperty());
+        tfQuantidade.textProperty().bindBidirectional(viewModel.quantidadeProperty());
+        
+
+        // btEditarMaterial.textProperty().bind(viewModel.operacaoProperty());
+        /////ALUNO
+
         tbcNomeAluno.setCellValueFactory(new PropertyValueFactory<>("nomeAluno"));
         tbcCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
         tbcTurma.setCellValueFactory(new PropertyValueFactory<>("turma"));
@@ -92,28 +137,55 @@ public class TelaAdmin extends BaseController implements Initializable {
         
         tfSenha.textProperty().bindBidirectional(viewModel.senhaProperty());
         
-        btEditarAluno.textProperty().bind(viewModel.operacaoProperty());
+        // btEditarAluno.textProperty().bind(viewModel.operacaoProperty());
     }
 
     @FXML
-    private void atualizar(MouseEvent event){
+    private void atualizarAluno(MouseEvent event){
         if(event.getClickCount() == 2)
-        viewModel.atualizar();
+        viewModel.atualizarAluno();
     }
 
     @FXML
-    private  void editar(){
-        viewModel.editar();
+    private  void editarAluno(){
+        viewModel.editarAluno();
     }
 
     @FXML
-    private void excluir(){
-        viewModel.excluir();
+    private void excluirAluno(){
+        viewModel.excluirAluno();
     }
 
 
-    public void limpar(){
-        viewModel.limpar();
+    public void limparAluno(){
+        viewModel.limparAluno();
+    }
+
+// ----------------------------------------------------------------------------------------------------------
+
+    @FXML
+    public void cadastrarMaterial(){
+        viewModel.cadastrarMaterial();
+    }
+
+    @FXML
+    private void atualizarMaterial(MouseEvent event){
+        if(event.getClickCount() == 2)
+        viewModel.atualizarMaterial();
+    }
+
+    @FXML
+    private void editarMaterial(){
+        viewModel.editarMaterial();
+    }
+
+    @FXML
+    private void excluirMaterial(){
+        viewModel.excluirMaterial();
+    }
+    
+    public void limparMaterial(){
+        viewModel.limparMaterial();
     }
 
 }

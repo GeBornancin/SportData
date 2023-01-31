@@ -69,6 +69,8 @@ public class TelaCadastroAlunoViewModel {
         turmaProperty.setValue("");
         senhaProperty.setValue("");
 
+        
+
     }
 
 

@@ -13,6 +13,14 @@ public class Material {
         this.quantidade = quantidade;
     }
 
+    
+
+    public Material(String nomeMaterial, int quantidade) {
+        this.nomeMaterial = nomeMaterial;
+        this.quantidade = quantidade;
+    }
+
+
 
     public int getIdMaterial() {
         return idMaterial;

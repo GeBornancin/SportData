@@ -8,9 +8,9 @@ import java.util.List;
 public interface MaterialDAO {
 
     Result create(Material obj);
-    Result update(int idMaterial, Material obj);
-    List<Material> getAll();
+    Result update(Material obj);
+    List<Material> listAll();
     Material getById(int idMaterial);
-    Result delete(int idMaterial);
+    Result deleteMaterial(int idMaterial);
     
 }

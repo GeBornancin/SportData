@@ -17,30 +17,42 @@ public class MateriaisRepository {
         this.dao = dao;
     }
 
-    public Result adicionarMaterial(int idMaterial, String nomeMaterial, int quantidade){
+    public Result adicionarMaterial(String nomeMaterial, int quantidade){
         if(quantidade < 0){
             return Result.fail("Quantidade invalida");
+        }else{
+            Material material = new Material(nomeMaterial, quantidade);
+            return dao.create(material);
         }
-
-        Material material = new Material(idMaterial, nomeMaterial, quantidade);
-        return dao.create(material);
 
     }
 
-    public List<Material> getMaterials(){
-        materiais = dao.getAll();
+    public List<Material> listarMaterial(){
+        materiais = dao.listAll();
         return Collections.unmodifiableList(materiais);
     }
 
-    public Result atualizarMaterial(int idMaterial, String nomeMaterial, int quantidade){
+    public Result atualizarMaterial(String nomeMaterial, int novaQuantidade){
 
-        if(quantidade < 0) {
+        Optional<Material> busca = materiais.stream().filter(mat->mat.getNomeMaterial().equals(nomeMaterial)).findFirst();
+        if(busca.isPresent()){
+            Material material = busca.get();
+            material.setQuantidade(novaQuantidade);
+            return dao.update(material);
+        }
+        
+        if(novaQuantidade < 0) {
             return Result.fail("Quantidade invalida");
         }
 
-        Material material = new Material(idMaterial, nomeMaterial, quantidade);
-        return dao.update(idMaterial, material);
+        return Result.fail("Material não encontrado");
+            
 
+    }
+
+    public Result deleteMaterial(int idMaterial){
+
+        return dao.deleteMaterial(idMaterial);
     }
 
     

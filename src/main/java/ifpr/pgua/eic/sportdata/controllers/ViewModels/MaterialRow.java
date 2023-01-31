@@ -1,9 +1,10 @@
 package ifpr.pgua.eic.sportdata.controllers.ViewModels;
 
 import ifpr.pgua.eic.sportdata.model.entities.Material;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
+import javafx.beans.property.IntegerProperty;
 // MATERIAL nomeMaterial QUANTIDADE
 
 public class MaterialRow {
@@ -27,6 +28,7 @@ public class MaterialRow {
     }
 
     public StringProperty quantidadeProperty(){
+
         return new SimpleStringProperty(String.valueOf(material.getQuantidade()));
     }
 

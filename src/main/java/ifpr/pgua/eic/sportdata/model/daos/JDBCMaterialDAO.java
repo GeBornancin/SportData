@@ -14,13 +14,15 @@ import ifpr.pgua.eic.sportdata.model.results.Result;
 
 public class JDBCMaterialDAO implements MaterialDAO {
     private static final String INSERT = "INSERT INTO pi_material(nomeMaterial,quantidade) VALUES (?,?)";
-    private static final String UPDATE = "UPDATE pi_material set nomeMaterial=?, quantidade? WHERE idMaterial=?";
+    private static final String UPDATE = "UPDATE pi_material set nomeMaterial=?, quantidade=? WHERE idMaterial=?";
     private static final String SELECT_ALL = "SELECT * FROM pi_material";
     private static final String SELECT_ID = "SELECT * FROM pi_material WHERE idMaterial=?";
+    private static final String DELETE = "DELETE FROM pi_material WHERE idMaterial=?";
 
     private FabricaConexoes fabricaConexoes;
 
     public JDBCMaterialDAO(FabricaConexoes fabricaConexoes){
+
         this.fabricaConexoes = fabricaConexoes;
     }
 
@@ -47,7 +49,7 @@ public class JDBCMaterialDAO implements MaterialDAO {
 	}
 
 	@Override
-	public Result update(int idMaterial, Material obj) {
+	public Result update(Material obj) {
 		try{
             Connection con = fabricaConexoes.getConnection();
 
@@ -55,7 +57,8 @@ public class JDBCMaterialDAO implements MaterialDAO {
 
             pstm.setString(1, obj.getNomeMaterial());
             pstm.setInt(2, obj.getQuantidade());
-            pstm.setInt(3, idMaterial);
+            pstm.setInt(3, obj.getIdMaterial());
+            
 
             pstm.execute();
 
@@ -84,7 +87,7 @@ public class JDBCMaterialDAO implements MaterialDAO {
     }
 
 	@Override
-	public List<Material> getAll() {
+	public List<Material> listAll() {
 		List<Material> materiais = new ArrayList<>();
         try{
             Connection con = fabricaConexoes.getConnection();
@@ -140,9 +143,28 @@ public class JDBCMaterialDAO implements MaterialDAO {
 	}
 
 	@Override
-	public Result delete(int idMaterial) {
-		// TODO Auto-generated method stub
-		return null;
+	public Result deleteMaterial(int idMaterial) {
+        
+        try{
+
+            Connection con = fabricaConexoes.getConnection(); 
+            PreparedStatement pstm = con.prepareStatement(DELETE);
+            
+            pstm.setInt(1, idMaterial);
+
+            pstm.execute();
+
+            pstm.close();
+            con.close();
+
+            return Result.success("apagado");
+                
+            }catch(SQLException e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
+		
 	}
     
 }
