@@ -1,0 +1,41 @@
+.button{
+    -fx-text-fill: #c7f2d4;
+    -fx-background-color: #262d40;
+}
+
+.root{
+    -fx-background-color: #015351;
+}
+
+.text-field{
+    -fx-background-color: #c7f2d4;
+}
+
+.table-view{
+    -fx-column-header-background: #4db64d;
+    -fx-text-fill: #5bca7c;
+}
+
+.table-view .table-column{
+    -fx-background-color: #c7f2d4;
+    -fx-border-color: #adf0c1;
+    -fx-empty-cells: show;
+    
+    
+}
+.label{
+    -fx-text-fill: #015351
+}
+
+.texto{
+    -fx-text-fill: #c7f2d4;
+}
+
+
+.table-view .table-column :hover{
+    -fx-background-color: #94d3a7;
+    -fx-border-color: #89d39f;
+    -fx-empty-cells: show;
+    
+    
+}

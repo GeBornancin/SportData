@@ -166,6 +166,34 @@ public class JDBCMaterialDAO implements MaterialDAO {
         
 		
 	}
+
+    @Override
+    public Material getMaterialItem(int itemId){
+        Material material = null;
+
+        try{    
+            Connection con = fabricaConexoes.getConnection();
+
+            PreparedStatement pstm = con.prepareStatement("SELECT idMaterial FROM itememprestimo WHERE id=?");
+
+            pstm.setInt(1, itemId);
+
+            ResultSet resultSetidMaterial = pstm.executeQuery();
+            resultSetidMaterial.next();
+
+            int idMaterial = resultSetidMaterial.getInt("idMaterial");
+
+            resultSetidMaterial.close();
+            pstm.close();
+            con.close();
+
+            material = getById(idMaterial);
+
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return material;
+    }
     
 }
 

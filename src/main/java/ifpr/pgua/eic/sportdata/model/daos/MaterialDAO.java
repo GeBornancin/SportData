@@ -11,6 +11,7 @@ public interface MaterialDAO {
     Result update(Material obj);
     List<Material> listAll();
     Material getById(int idMaterial);
+    Material getMaterialItem(int ItemId);
     Result deleteMaterial(int idMaterial);
     
 }
