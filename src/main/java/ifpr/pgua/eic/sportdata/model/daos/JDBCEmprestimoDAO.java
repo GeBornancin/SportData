@@ -24,7 +24,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO{
 
     private static final String INSERT = "INSERT INTO pi_emprestimo(dataEmprestimo, idAluno) VALUES (?,?,?,?)";
     private static final String INSERT_ITEM = "INSERT INTO pi_itememprestimo(idEmprestimo,idMaterial,quantidade) VALUES (?,?,?,?)";
-    private static final String SELECT_ALL = "SELECT * FROM emprestimos";
+    private static final String SELECT_ALL = "SELECT * FROM pi_emprestimo";
 
     private FabricaConexoes fabricaConexoes;
 
@@ -70,33 +70,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO{
         }
     }
 
-    public List<Emprestimo> getAll() {
-        List<Emprestimo> emprestimos = new ArrayList<>();
-
-        try{
-            Connection con = fabricaConexoes.getConnection();
-
-            PreparedStatement pstm = con.prepareStatement(SELECT_ALL);
-
-            ResultSet rs = pstm.executeQuery();
-
-            while(rs.next()){
-                Emprestimo emprestimo = buildFrom(rs);
-                emprestimos.add(emprestimo);
-            }
-
-            rs.close();
-            pstm.close();
-            con.close();
-
-            return emprestimos;
-
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
-            return Collections.emptyList();
-        }
-    }
-
+    
     private Emprestimo buildFrom(ResultSet rs) throws SQLException {
        
         int idEmprestimo = rs.getInt("idEmprestimo");
@@ -113,7 +87,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO{
 
         Connection con = fabricaConexoes.getConnection();
 
-        PreparedStatement pstm = con.prepareStatement("SELECT * FROM itememprestimo WHERE idEmprestimo=?");
+        PreparedStatement pstm = con.prepareStatement("SELECT * FROM pi_itememprestimo WHERE idEmprestimo=?");
 
         pstm.setInt(1,idEmprestimo);
 
@@ -137,4 +111,35 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO{
         return itens;
 
     }
+
+    public List<Emprestimo> getAll() {
+        List<Emprestimo> lista = new ArrayList<>();
+
+        try{
+            Connection con = fabricaConexoes.getConnection();
+
+            PreparedStatement pstm = con.prepareStatement(SELECT_ALL);
+
+            ResultSet rs = pstm.executeQuery();
+
+            while(rs.next()){
+                Emprestimo emprestimo = buildFrom(rs);
+                emprestimo.setItens(loadItens(emprestimo.getIdEmprestimo()));
+                lista.add(emprestimo);
+            }
+
+            rs.close();
+            pstm.close();
+            con.close();
+
+            return lista;
+
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            return Collections.emptyList();
+        }
+    }
+
+    
+    
 }

@@ -5,42 +5,42 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifpr.pgua.eic.sportdata.controllers.TelaGeral" 
-stylesheets="@css/geral.css" styleClass="root">
+<VBox  prefHeight="800" prefWidth="1366.0" styleClass="root" stylesheets="@css/geral.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifpr.pgua.eic.sportdata.controllers.TelaGeral">
    <children>
-      <Pane prefHeight="197.0" prefWidth="645.0">
+      <Pane prefHeight="207.0" prefWidth="1366.0">
          <children>
-            <Label layoutX="183.0" layoutY="40.0" prefHeight="17.0" prefWidth="47.0" text="Material:" styleClass="texto"/>
-            <Label layoutX="164.0" layoutY="94.0" text="Quantidade:" styleClass="texto"/>
-            <TextField fx:id="tfQuantidade" layoutX="230.0" layoutY="90.0" prefHeight="25.0" prefWidth="241.0" />
-            <Button fx:id="btCadastrarMaterial" layoutX="229.0" layoutY="134.0" mnemonicParsing="false" onAction="#cadastrarMaterial" text="Cadastrar" />
-            <Button fx:id="btLimparMaterial" layoutX="402.0" layoutY="134.0" mnemonicParsing="false" onAction="#limparMaterial" prefHeight="25.0" prefWidth="69.0" text="Limpar" />
-            <TextField fx:id="tfNomeMaterial" layoutX="230.0" layoutY="36.0" prefHeight="25.0" prefWidth="241.0" />
-            <TextField fx:id="tfNomeAluno" layoutX="776.0" layoutY="36.0" prefHeight="25.0" prefWidth="195.0" />
-            <TextField fx:id="tfTurma" layoutX="1089.0" layoutY="36.0" prefHeight="25.0" prefWidth="195.0" />
-            <TextField fx:id="tfCpf" layoutX="776.0" layoutY="90.0" prefHeight="25.0" prefWidth="195.0" />
-            <TextField fx:id="tfSenha" layoutX="1089.0" layoutY="90.0" prefHeight="25.0" prefWidth="195.0" />
-            <Button fx:id="btEditarAluno" layoutX="860.0" layoutY="134.0" mnemonicParsing="false" onAction="#editarAluno" prefHeight="25.0" prefWidth="111.0" text="Editar" />
-            <Label layoutX="713.0" layoutY="40.0" text="Aluno:" styleClass="texto"/>
-            <Label layoutX="713.0" layoutY="94.0" text="C.P.F:" styleClass="texto"/>
-            <Label layoutX="1042.0" layoutY="40.0" text="Turma:" styleClass="texto"/>
-            <Label layoutX="1042.0" layoutY="94.0" text="Senha:" styleClass="texto"/>
-            <Button fx:id="btEditarMaterial" layoutX="316.0" layoutY="134.0" mnemonicParsing="false" onAction="#editarMaterial" prefHeight="25.0" prefWidth="69.0" text="Editar" />
-            <Button layoutX="1173.0" layoutY="134.0" mnemonicParsing="false" onAction="#limparAluno" prefHeight="25.0" prefWidth="111.0" text="Limpar" />
+            <Label layoutX="139.0" layoutY="80.0" prefHeight="17.0" prefWidth="47.0" styleClass="texto" text="Material:" />
+            <Label layoutX="130.0" layoutY="134.0" styleClass="texto" text="Quantidade:" />
+            <TextField fx:id="tfQuantidade" layoutX="229.0" layoutY="130.0" prefHeight="25.0" prefWidth="241.0" />
+            <Button fx:id="btCadastrarMaterial" layoutX="228.0" layoutY="174.0" mnemonicParsing="false" onAction="#cadastrarMaterial" text="Cadastrar" />
+            <Button fx:id="btLimparMaterial" layoutX="401.0" layoutY="174.0" mnemonicParsing="false" onAction="#limparMaterial" prefHeight="25.0" prefWidth="69.0" text="Limpar" />
+            <TextField fx:id="tfNomeMaterial" layoutX="229.0" layoutY="76.0" prefHeight="25.0" prefWidth="241.0" />
+            <TextField fx:id="tfNomeAluno" layoutX="775.0" layoutY="76.0" prefHeight="25.0" prefWidth="195.0" />
+            <TextField fx:id="tfTurma" layoutX="1088.0" layoutY="76.0" prefHeight="25.0" prefWidth="195.0" />
+            <TextField fx:id="tfCpf" layoutX="775.0" layoutY="130.0" prefHeight="25.0" prefWidth="195.0" />
+            <TextField fx:id="tfSenha" layoutX="1088.0" layoutY="130.0" prefHeight="25.0" prefWidth="195.0" />
+            <Button fx:id="btEditarAluno" layoutX="859.0" layoutY="174.0" mnemonicParsing="false" onAction="#editarAluno" prefHeight="25.0" prefWidth="111.0" text="Editar" />
+            <Label layoutX="712.0" layoutY="80.0" styleClass="texto" text="Aluno:" />
+            <Label layoutX="712.0" layoutY="134.0" styleClass="texto" text="C.P.F:" />
+            <Label layoutX="1032.0" layoutY="80.0" styleClass="texto" text="Turma:" />
+            <Label layoutX="1033.0" layoutY="134.0" styleClass="texto" text="Senha:" />
+            <Button fx:id="btEditarMaterial" layoutX="315.0" layoutY="174.0" mnemonicParsing="false" onAction="#editarMaterial" prefHeight="25.0" prefWidth="69.0" text="Editar" />
+            <Button layoutX="1172.0" layoutY="174.0" mnemonicParsing="false" onAction="#limparAluno" prefHeight="25.0" prefWidth="111.0" text="Limpar" />
          </children>
       </Pane>
       <Pane prefHeight="575.0" prefWidth="1366.0">
          <children>
             <HBox layoutX="108.0" layoutY="25.0" prefHeight="488.0" prefWidth="467.0">
                <children>
-                  <TableView fx:id="tbMateriais" prefHeight="548.0" prefWidth="466.0" onMouseClicked="#atualizarMaterial" styleClass="tbMaterial">
+                  <TableView fx:id="tbMateriais" onMouseClicked="#atualizarMaterial" prefHeight="548.0" prefWidth="466.0" styleClass="tbMaterial">
                      <columns>
-                        <TableColumn fx:id="tbcNomeMaterial" prefWidth="233.0" text="Material" styleClass="tbMaterial"/>
-                        <TableColumn fx:id="tbcQuantidade" prefWidth="231.0" text="Quantidade" styleClass="tbMaterial" />
+                        <TableColumn fx:id="tbcNomeMaterial" prefWidth="233.0" styleClass="tbMaterial" text="Material" />
+                        <TableColumn fx:id="tbcQuantidade" prefWidth="231.0" styleClass="tbMaterial" text="Quantidade" />
                      </columns>
                   </TableView>
                </children>
@@ -62,5 +62,10 @@ stylesheets="@css/geral.css" styleClass="root">
             <Button fx:id="btExcluirAluno" layoutX="1223.0" layoutY="257.0" mnemonicParsing="false" onAction="#excluirAluno" prefHeight="25.0" prefWidth="111.0" text="Excluir" />
          </children>
       </Pane>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+          <Button mnemonicParsing="false" text="Button" />
+        </items>
+      </ToolBar>
    </children>
 </VBox>

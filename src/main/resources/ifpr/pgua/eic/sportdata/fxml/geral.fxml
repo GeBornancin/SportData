@@ -10,28 +10,26 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" 
-      xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifpr.pgua.eic.sportdata.controllers.TelaGeral" stylesheets="@css/geral.css"
-      styleClass="root"> 
+<VBox prefHeight="801" prefWidth="1366.0" styleClass="root" stylesheets="@css/geral.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifpr.pgua.eic.sportdata.controllers.TelaGeral"> 
    <children>
       <Pane prefHeight="197.0" prefWidth="645.0">
          <children>
-            <Label layoutX="473.0" layoutY="62.0" prefHeight="17.0" prefWidth="47.0" text="Material:" styleClass="texto" />
-            <Label layoutX="454.0" layoutY="116.0" text="Quantidade:" styleClass="texto"/>
+            <Label layoutX="473.0" layoutY="62.0" prefHeight="17.0" prefWidth="47.0" styleClass="texto" text="Material:" />
+            <Label layoutX="454.0" layoutY="116.0" styleClass="texto" text="Quantidade:" />
             <TextField layoutX="520.0" layoutY="112.0" prefHeight="25.0" prefWidth="241.0" />
             <Button layoutX="520.0" layoutY="156.0" mnemonicParsing="false" text="Emprestar" />
             <Button layoutX="606.0" layoutY="156.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Limpar" />
             <ComboBox layoutX="520.0" layoutY="58.0" prefHeight="25.0" prefWidth="241.0" />
-            <Button layoutX="1287.0" layoutY="8.0"  onAction="#carregaTelaAdmin" mnemonicParsing="false" text="admin" />
+            <Button layoutX="1272.0" layoutY="46.0" mnemonicParsing="false" onAction="#carregaTelaAdmin" text="admin" />
             <Button layoutX="691.0" layoutY="156.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Devolver" />
          </children>
       </Pane>
       <Pane prefHeight="575.0" prefWidth="1366.0">
          <children>
             <Label layoutX="1008.0" layoutY="2.0" prefHeight="25.0" prefWidth="69.0" text="Empréstimos" />
-            <HBox layoutX="108.0" layoutY="25.0" prefHeight="548.0" prefWidth="467.0">
+            <HBox layoutX="108.0" layoutY="25.0" prefHeight="526.0" prefWidth="467.0">
                <children>
-                  <TableView prefHeight="548.0" prefWidth="466.0">
+                  <TableView prefHeight="551.0" prefWidth="466.0">
                     <columns>
                       <TableColumn prefWidth="233.0" text="Material" />
                       <TableColumn prefWidth="231.0" text="Quantidade" />
@@ -39,7 +37,7 @@
                   </TableView>
                </children>
             </HBox>
-            <HBox layoutX="708.0" layoutY="25.0" prefHeight="548.0" prefWidth="631.0">
+            <HBox layoutX="708.0" layoutY="25.0" prefHeight="526.0" prefWidth="631.0">
                <children>
                   <TableView prefHeight="376.0" prefWidth="646.0">
                     <columns>
@@ -51,7 +49,7 @@
                </children>
             </HBox>
             <Label layoutX="286.0" layoutY="6.0" text="Materiais disponiveis" />
-            <Button  onAction="#carregaTelaLogin" layoutX="14.0" layoutY="534.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Sair" />
+            <Button layoutX="14.0" layoutY="534.0" mnemonicParsing="false" onAction="#carregaTelaLogin" prefHeight="25.0" prefWidth="65.0" text="Sair" />
          </children>
       </Pane>
    </children>

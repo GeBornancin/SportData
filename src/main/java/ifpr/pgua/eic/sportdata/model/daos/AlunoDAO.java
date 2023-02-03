@@ -12,6 +12,7 @@ public interface AlunoDAO {
     Aluno getByIdAluno(int idAluno);
     Aluno getAlunoFromEmprestimo(int idEmprestimo);
     Result deleteAluno(int idAluno);
+    Aluno login(String cpf, String senha);
     
 }
 

@@ -1,17 +1,25 @@
 package ifpr.pgua.eic.sportdata.utils.Navigator;
 
 
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ToolBar;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * Classe responsável por criar uma aplicação que permite a 
@@ -52,7 +60,41 @@ public abstract class BaseAppNavigator extends Application{
 
         this.palco.setScene(cena);
         this.palco.setTitle(getAppTitle());
+        this.palco.getIcons().add(new Image("https://i.pinimg.com/564x/84/ac/80/84ac803bb9180c65be0611d28d2714c2.jpg"));
+        
+        primaryStage.initStyle(StageStyle.UNDECORATED);
+
+        BorderPane borderPane = new BorderPane();
+        borderPane.setStyle("-fx-background-color: green;");
+
+        ToolBar toolBar = new ToolBar();
+
+        int height = 25;
+        toolBar.setPrefHeight(height);
+        toolBar.setMinHeight(height);
+        toolBar.setMaxHeight(height);
+        toolBar.getItems().add(new WindowButtons());
+
+        borderPane.setTop(toolBar);
+
         this.palco.show();
+    }
+
+    public class WindowButtons extends HBox {
+
+        public WindowButtons() {
+            Button closeBtn = new Button("X");
+
+            closeBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    Platform.exit();
+                }
+            });
+
+            this.getChildren().add(closeBtn);
+        }
     }
 
     /**

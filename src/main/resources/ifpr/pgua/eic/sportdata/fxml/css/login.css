@@ -12,13 +12,30 @@
 }
 
 .label {
-    -fx-font-size: 10px;
+    
     -fx-text-fill: #c7f2d4;
 }
 
 .hyperlink {
     -fx-text-fill: #c7f2d4;
 }
-.sportdata{
-    -fx-font-size: 100px;
+
+.barra{
+    -fx-background-color: #015351;
+}
+
+.fechar{
+
+    -fx-cursor:hand;
+    -fx-background-color:rgba(0,0,0,0);
+
+}
+
+.fechar:hover{
+
+    -fx-background-color:rgba(255, 2, 2, 0.389);
+
+    -fx-background-radius: 25;
+    -fx-border-radius: 25;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.978), 10, 0.7, 0.0, 0.0);
 }

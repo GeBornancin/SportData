@@ -62,4 +62,9 @@ public class AlunosRepository {
         return dao.deleteAluno(idAluno);
 
     }
+
+    public Aluno loginAluno(String cpf, String senha){
+        return dao.login(cpf, senha);
+    }
+
 }

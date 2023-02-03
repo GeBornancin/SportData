@@ -1,6 +1,7 @@
 .button{
     -fx-text-fill: #c7f2d4;
     -fx-background-color: #262d40;
+    -fx-cursor:hand;
 }
 
 .root{
