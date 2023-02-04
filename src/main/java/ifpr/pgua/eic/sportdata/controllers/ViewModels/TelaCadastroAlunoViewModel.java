@@ -5,6 +5,7 @@ import ifpr.pgua.eic.sportdata.model.repositories.AlunosRepository;
 import ifpr.pgua.eic.sportdata.model.results.Result;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Alert;
 
 
 
@@ -51,13 +52,26 @@ public class TelaCadastroAlunoViewModel {
 
     public void cadastrar() {
 
+        Alert alert = new Alert(Alert.AlertType.NONE);
+
+        
+
         String cpf = cpfProperty.getValue();
         String nomeAluno = nomeAlunoProperty.getValue();
         String turma = turmaProperty.getValue();
         String senha = senhaProperty.getValue();
+
         
 
         repository.adicionarAluno(cpf, nomeAluno, turma, senha);
+
+
+        if(cpf == null){
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Campo CPF vazio");
+            alert.showAndWait();
+
+        }
         Result.fail("teste");
         limpar();
         

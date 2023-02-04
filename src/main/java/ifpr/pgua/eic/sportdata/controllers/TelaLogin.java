@@ -9,6 +9,7 @@ import ifpr.pgua.eic.sportdata.controllers.ViewModels.TelaLoginViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class TelaLogin extends BaseController implements Initializable{
@@ -17,11 +18,15 @@ public class TelaLogin extends BaseController implements Initializable{
     private TextField tfUser;
 
     @FXML
-    private TextField tfPassword;
+    private PasswordField tfPassword;
 
     @FXML
     private Button btLogin;
 
+    @FXML
+    private void carregaTelaAdmin(){
+        App.changeScreenRegion("ADMIN", BorderPaneRegion.CENTER);
+    }
 
     @FXML
     private void carregaTelaCadastroAluno(){

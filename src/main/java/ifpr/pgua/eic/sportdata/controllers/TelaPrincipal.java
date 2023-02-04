@@ -5,6 +5,8 @@ import ifpr.pgua.eic.sportdata.App;
 import ifpr.pgua.eic.sportdata.utils.Navigator.BorderPaneRegion;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 public class TelaPrincipal extends BaseController {
     
@@ -15,8 +17,19 @@ public class TelaPrincipal extends BaseController {
 
     } 
 
+    @FXML
+    private Button iconid;
+
     public void fecharApp(){
         Platform.exit();
+        
+    }
+
+    public void minimizarApp(){
+
+        Stage obj = (Stage) iconid.getScene().getWindow();
+        obj.setIconified(true);
+        
         
     }
 
