@@ -1,5 +1,6 @@
 .text-field{
     -fx-background-color: #c7f2d4;
+    -fx-highlight-fill:rgba(218, 28, 28, 0.758);
 }
 
 .root{
@@ -8,7 +9,8 @@
 
 .button{
     -fx-text-fill: #c7f2d4;
-    -fx-background-color: #262d40;
+    -fx-background-color: rgb(38, 45, 64);
+    -fx-cursor:hand;
 }
 
 .label {
@@ -31,6 +33,16 @@
 
 }
 
+.button:hover{
+    
+
+    -fx-background-color:rgba(38, 45, 64, 0.389);
+
+    -fx-background-radius: 7;
+    -fx-border-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(18, 174, 65, 0.978), 0.3, 0.3, 0.0, 0.0);
+
+}
 .fechar:hover{
 
     -fx-background-color:rgba(255, 2, 2, 0.389);
@@ -38,4 +50,8 @@
     -fx-background-radius: 7;
     -fx-border-radius: 5;
     -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.978), 0.3, 0.3, 0.0, 0.0);
+}
+.textoCadastroAluno{
+    -fx-text-fill: #c7f2d4;
+
 }
