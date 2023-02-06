@@ -41,13 +41,6 @@ public class TelaLoginViewModel {
 
         alunoKey = alunosRepository.loginAluno(user, password);
 
-        try {
-            
-            
-        } catch (Exception e) {
-            // TODO: handle exception
-
-        }
         if(alunoKey != null){
             alert.setAlertType(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Login efetuado!");
