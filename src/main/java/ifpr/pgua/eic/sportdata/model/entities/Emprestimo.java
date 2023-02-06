@@ -12,12 +12,14 @@ public class Emprestimo {
     private Aluno aluno;
     private List<ItemEmprestimo> itens;
     private LocalDateTime dataEmprestimo;
+    private LocalDateTime dataDevolucao;
 
-	public Emprestimo(int idEmprestimo, Aluno aluno, List<ItemEmprestimo> itens, LocalDateTime dataEmprestimo) {
+    public Emprestimo(int idEmprestimo, Aluno aluno, List<ItemEmprestimo> itens, LocalDateTime dataEmprestimo, LocalDateTime dtDevolucao) {
         this.idEmprestimo = idEmprestimo;
         this.aluno = aluno;
         this.itens = itens;
         this.dataEmprestimo = dataEmprestimo;
+        this.dataDevolucao = dataDevolucao;
     }
 
     public Emprestimo(int idEmprestimo, LocalDateTime dataEmprestimo) {
@@ -94,6 +96,14 @@ public class Emprestimo {
 
         public void setDataEmprestimo(LocalDateTime dataEmprestimo) {
             this.dataEmprestimo = dataEmprestimo;
+        }
+
+        public LocalDateTime getDataDevolucao() {
+        return dataDevolucao;
+        }
+
+        public void setDataDevolucao(LocalDateTime dataDevolucao) {
+            this.dataDevolucao = dataDevolucao;
         }
 
 }

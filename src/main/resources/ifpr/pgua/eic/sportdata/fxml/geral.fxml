@@ -17,10 +17,10 @@
          <children>
             <Label layoutX="473.0" layoutY="62.0" prefHeight="17.0" prefWidth="47.0" styleClass="texto" text="Material:" />
             <Label layoutX="454.0" layoutY="116.0" styleClass="texto" text="Quantidade:" />
-            <TextField layoutX="520.0" layoutY="99.0" prefHeight="40.0" prefWidth="241.0" />
-            <Button layoutX="497.0" layoutY="166.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="78.0" text="Emprestar" />
+            <TextField fx:id="tfQuantidade" layoutX="520.0" layoutY="99.0" prefHeight="40.0" prefWidth="241.0" />
+            <Button layoutX="497.0" layoutY="166.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="78.0" text="Emprestar" onAction="#emprestarItem" />
             <Button layoutX="602.0" layoutY="166.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="78.0" text="Limpar" />
-            <ComboBox editable="true" layoutX="520.0" layoutY="45.0" prefHeight="40.0" prefWidth="241.0">
+            <ComboBox fx:id="cbMaterial" editable="true" layoutX="520.0" layoutY="45.0" prefHeight="40.0" prefWidth="241.0">
                <cursor>
                   <Cursor fx:constant="S_RESIZE" />
                </cursor></ComboBox>
@@ -33,24 +33,22 @@
             <Label layoutX="1008.0" layoutY="2.0" prefHeight="25.0" prefWidth="69.0" text="Empréstimos" />
             <HBox layoutX="108.0" layoutY="25.0" prefHeight="526.0" prefWidth="467.0">
                <children>
-                  <TableView prefHeight="551.0" prefWidth="466.0">
+                  <TableView  fx:id="tbIntensDisponiveis" prefHeight="551.0" prefWidth="466.0" >
                     <columns>
-                      <TableColumn prefWidth="233.0" text="Material" />
-                      <TableColumn prefWidth="231.0" text="Quantidade" />
+                      <TableColumn fx:id="tbcNomeMaterial" prefWidth="233.0" text="Material" />
+                      <TableColumn fx:id="tbcQuantidade" prefWidth="231.0" text="Quantidade" />
                     </columns>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
+                    
                   </TableView>
                </children>
             </HBox>
             <HBox layoutX="708.0" layoutY="25.0" prefHeight="526.0" prefWidth="631.0">
                <children>
-                  <TableView prefHeight="376.0" prefWidth="646.0">
+                  <TableView fx:id="tbEmprestimos"  prefHeight="376.0" prefWidth="646.0">
                     <columns>
-                      <TableColumn prefWidth="297.0" text="Aluno" />
-                      <TableColumn prefWidth="241.0" text="Material" />
-                        <TableColumn minWidth="7.0" prefWidth="91.0" text="Data" />
+                      <TableColumn fx:id="tbcAluno"  prefWidth="297.0" text="Aluno" />
+                      <TableColumn fx:id="tbcItensEmprestimo"  prefWidth="241.0" text="Material" />
+                     <TableColumn fx:id="tbcData"  minWidth="7.0" prefWidth="91.0" text="Data" />
                     </columns>
                   </TableView>
                </children>

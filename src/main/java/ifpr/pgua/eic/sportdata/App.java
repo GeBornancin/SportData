@@ -25,6 +25,7 @@ import ifpr.pgua.eic.sportdata.controllers.TelaLogin;
 import ifpr.pgua.eic.sportdata.controllers.TelaPrincipal;
 import ifpr.pgua.eic.sportdata.controllers.ViewModels.TelaAdminViewModel;
 import ifpr.pgua.eic.sportdata.controllers.ViewModels.TelaCadastroAlunoViewModel;
+import ifpr.pgua.eic.sportdata.controllers.ViewModels.TelaGeralViewModel;
 import ifpr.pgua.eic.sportdata.controllers.ViewModels.TelaLoginViewModel;
 import ifpr.pgua.eic.sportdata.model.FabricaConexoes;
 import ifpr.pgua.eic.sportdata.model.repositories.AlunosRepository;
@@ -97,7 +98,7 @@ public class App extends BaseAppNavigator {
         registraTela("LOGIN", new ScreenRegistryFXML(getClass(),
          "fxml/login.fxml", (o) -> new TelaLogin(new TelaLoginViewModel(alunosRepository, alunoKey))));
         registraTela("CADASTROALUNO", new ScreenRegistryFXML(getClass(), "fxml/cadastroAluno.fxml", (o) -> new TelaCadastroAluno(new TelaCadastroAlunoViewModel(alunosRepository))));
-        registraTela("GERAL", new ScreenRegistryFXML(getClass(), "fxml/geral.fxml", (o) -> new TelaGeral()));
+        registraTela("GERAL", new ScreenRegistryFXML(getClass(), "fxml/geral.fxml", (o) -> new TelaGeral(new TelaGeralViewModel(alunosRepository, materiaisRepository, emprestimosRepository))));
         registraTela("ADMIN", new ScreenRegistryFXML(getClass(), "fxml/admin.fxml", (o) -> new TelaAdmin(new TelaAdminViewModel(alunosRepository, materiaisRepository))));
         // REGISTRAR AS OUTRAS TELAS
     }

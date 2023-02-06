@@ -71,8 +71,14 @@ public class TelaCadastroAlunoViewModel {
             alert.setHeaderText("Campo CPF vazio");
             alert.showAndWait();
 
+        }else{
+
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Cadastro concluido!");
+            alert.showAndWait();
+
         }
-        Result.fail("teste");
+        
         limpar();
         
        }

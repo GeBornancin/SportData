@@ -4,8 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-
-
+import ifpr.pgua.eic.sportdata.controllers.ViewModels.AlunoRow;
 import ifpr.pgua.eic.sportdata.model.daos.AlunoDAO;
 import ifpr.pgua.eic.sportdata.model.entities.Aluno;
 import ifpr.pgua.eic.sportdata.model.results.Result;
@@ -66,5 +65,8 @@ public class AlunosRepository {
     public Aluno loginAluno(String cpf, String senha){
         return dao.login(cpf, senha);
     }
+
+
+
 
 }

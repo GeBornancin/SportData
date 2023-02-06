@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -41,6 +42,9 @@
                         <TableColumn fx:id="tbcNomeMaterial" prefWidth="233.0" styleClass="tbMaterial" text="Material" />
                         <TableColumn fx:id="tbcQuantidade" prefWidth="231.0" styleClass="tbMaterial" text="Quantidade" />
                      </columns>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </TableView>
                </children>
             </HBox>
@@ -53,6 +57,9 @@
                         <TableColumn fx:id="tbcTurma" minWidth="0.0" prefWidth="101.0" text="Turma" />
                         <TableColumn fx:id="tbcSenha" minWidth="0.0" prefWidth="101.0" text="Senha" />
                      </columns>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </TableView>
                </children>
             </HBox>

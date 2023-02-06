@@ -5,7 +5,7 @@ public class ItemEmprestimo {
     private int idItemEmprestimo;
     private Material material;
     private int quantidade;
-
+    
     
     public int getIdItemEmprestimo() {
         return idItemEmprestimo;

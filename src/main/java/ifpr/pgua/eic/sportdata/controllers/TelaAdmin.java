@@ -11,6 +11,7 @@ import ifpr.pgua.eic.sportdata.utils.Navigator.BorderPaneRegion;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -38,6 +39,9 @@ public class TelaAdmin extends BaseController implements Initializable {
 
     @FXML
     private TableColumn<MaterialRow, Integer> tbcQuantidade;
+
+    @FXML 
+    private ComboBox cbMaterial;
 
     @FXML
     private TextField tfNomeMaterial;

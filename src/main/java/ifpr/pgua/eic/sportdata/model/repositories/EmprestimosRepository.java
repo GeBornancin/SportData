@@ -20,6 +20,7 @@ public class EmprestimosRepository {
     public AlunoDAO alunoDao;
     public EmprestimoDAO emprestimoDao;
     public MaterialDAO materialDao;
+    
 
     public EmprestimosRepository(EmprestimoDAO dao, AlunoDAO alunoDao, MaterialDAO materialDao) {
         this.emprestimoDao = dao;

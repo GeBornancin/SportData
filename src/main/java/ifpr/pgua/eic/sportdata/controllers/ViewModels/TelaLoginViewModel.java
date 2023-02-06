@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 
 import ifpr.pgua.eic.sportdata.model.entities.Aluno;
 import ifpr.pgua.eic.sportdata.model.repositories.AlunosRepository;
+import ifpr.pgua.eic.sportdata.model.entities.Sessao;
 
 public class TelaLoginViewModel {
 
@@ -37,13 +38,18 @@ public class TelaLoginViewModel {
 
         String user = spUser.getValue();
         String password = spPassword.getValue();
-        
+        Sessao sessao = Sessao.getInstance();
 
         alunoKey = alunosRepository.loginAluno(user, password);
 
+    
+        
         if(alunoKey != null){
             alert.setAlertType(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Login efetuado!");
+            sessao.setAluno(alunoKey);
+            System.out.println(Sessao.getInstance().getAluno());
+            alert.setHeaderText("Bem-vindo "+Sessao.getInstance().getAluno() );
+            
             alert.showAndWait();
             
             return true;
@@ -60,7 +66,8 @@ public class TelaLoginViewModel {
             alert.showAndWait();
             return false;
 
-        } else {
+        } 
+         else {
             
             return false;
         }

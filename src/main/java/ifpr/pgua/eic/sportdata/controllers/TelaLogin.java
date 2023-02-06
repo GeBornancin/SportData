@@ -50,6 +50,7 @@ public class TelaLogin extends BaseController implements Initializable{
  
     private TelaLoginViewModel viewModel;
     
+    
     public TelaLogin(TelaLoginViewModel viewModel){
         this.viewModel = viewModel;
     }
