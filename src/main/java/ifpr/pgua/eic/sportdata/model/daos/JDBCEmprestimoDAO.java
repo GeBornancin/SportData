@@ -1,13 +1,11 @@
 package ifpr.pgua.eic.sportdata.model.daos;
 
-import java.sql.CallableStatement;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
-import java.sql.Types;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,15 +13,16 @@ import java.util.List;
 
 
 import ifpr.pgua.eic.sportdata.model.FabricaConexoes;
+import ifpr.pgua.eic.sportdata.model.entities.Aluno;
+import ifpr.pgua.eic.sportdata.model.entities.Material;
 import ifpr.pgua.eic.sportdata.model.entities.Emprestimo;
-import ifpr.pgua.eic.sportdata.model.entities.ItemEmprestimo;
+
 import ifpr.pgua.eic.sportdata.model.results.Result;
 
 
 public class JDBCEmprestimoDAO implements EmprestimoDAO{
 
-    private static final String INSERT = "INSERT INTO pi_emprestimo(dataEmprestimo, idAluno) VALUES (?,?,?,?)";
-    private static final String INSERT_ITEM = "INSERT INTO pi_itememprestimo(idEmprestimo,idMaterial,quantidade) VALUES (?,?,?,?)";
+    // private static final String INSERT = "INSERT INTO pi_emprestimo(dataEmprestimo, idAluno, quantidade, dataDevolucao) VALUES (?,?,?,?)";
     private static final String SELECT_ALL = "SELECT * FROM pi_emprestimo";
 
     private FabricaConexoes fabricaConexoes;
@@ -36,33 +35,24 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO{
     public Result create(Emprestimo emprestimo) {
         try{
             Connection con = fabricaConexoes.getConnection();
-
-            PreparedStatement pstm = con.prepareStatement(INSERT,Statement.RETURN_GENERATED_KEYS);
+           
+            PreparedStatement pstm = con.prepareStatement
+             ("INSERT INTO pi_emprestimo(dataEmprestimo, idAluno, idMaterial, quantidadeEmprestada, dataDevolucao) VALUES (?,?,?,?,?)");
+           
+            
+            
 
             pstm.setTimestamp(1, Timestamp.valueOf(emprestimo.getDataEmprestimo()));
-            pstm.setInt(2, emprestimo.getAluno().getIdAluno());
+            pstm.setInt(2, emprestimo.getAluno().getIdAluno());  
+            pstm.setInt(3, emprestimo.getMaterial().getIdMaterial());
+            pstm.setInt(4, emprestimo.getQuantidadeEmprestada());
+            pstm.setTimestamp(5, null);
 
             pstm.execute();
-
-            ResultSet resultSet = pstm.getGeneratedKeys();
-            resultSet.next();
-            int idEmprestimo = resultSet.getInt(1);
-
-            PreparedStatement pstmItem = con.prepareStatement(INSERT_ITEM);
-
-            for(ItemEmprestimo item:emprestimo.getItens()){
-                pstmItem.setInt(1, idEmprestimo);
-                pstmItem.setInt(2, item.getMaterial().getIdMaterial());
-                pstmItem.setInt(3, item.getQuantidade());
-
-                pstmItem.execute();
-            }
-
-            pstmItem.close();
             pstm.close();
-
             con.close();
-
+            
+            
             return Result.success("Emprestimo criado com sucesso");
 
         }catch(SQLException e){
@@ -75,43 +65,23 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO{
        
         int idEmprestimo = rs.getInt("idEmprestimo");
         LocalDateTime dataEmprestimo = rs.getTimestamp("dataEmprestimo").toLocalDateTime();
+        int quantidadeEmprestada = rs.getInt("quantidadeEmprestada");
+        LocalDateTime dataDevolucao = null;
+        try {
+            dataDevolucao = rs.getTimestamp("dataDevolucao").toLocalDateTime();
+        } catch (NullPointerException error) {
+            // TODO: handle exception
+        }
+        
 
-        Emprestimo emprestimo = new Emprestimo(idEmprestimo, dataEmprestimo);
+        Emprestimo emprestimo = new Emprestimo(idEmprestimo, dataEmprestimo, quantidadeEmprestada, dataDevolucao);
         
         return emprestimo;
     }
 
-    private List<ItemEmprestimo> loadItens(int idEmprestimo) throws SQLException{
+  
 
-        List<ItemEmprestimo> itens = new ArrayList<>();
-
-        Connection con = fabricaConexoes.getConnection();
-
-        PreparedStatement pstm = con.prepareStatement("SELECT * FROM pi_itememprestimo WHERE idEmprestimo=?");
-
-        pstm.setInt(1,idEmprestimo);
-
-        ResultSet result = pstm.executeQuery();
-
-        while(result.next()){
-            int idItem = result.getInt("idItemEmprestimo");
-            int quantidade = result.getInt("quantidade");
-
-            ItemEmprestimo item = new ItemEmprestimo();
-            item.setIdItemEmprestimo(idItem);
-            item.setQuantidade(quantidade);
-
-            itens.add(item);
-        }
-
-        result.close();
-        pstm.close();
-        con.close();
-
-        return itens;
-
-    }
-
+    @Override
     public List<Emprestimo> getAll() {
         List<Emprestimo> lista = new ArrayList<>();
 
@@ -124,7 +94,6 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO{
 
             while(rs.next()){
                 Emprestimo emprestimo = buildFrom(rs);
-                emprestimo.setItens(loadItens(emprestimo.getIdEmprestimo()));
                 lista.add(emprestimo);
             }
 

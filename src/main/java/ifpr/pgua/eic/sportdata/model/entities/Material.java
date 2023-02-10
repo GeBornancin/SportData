@@ -52,7 +52,10 @@ public class Material {
     }
     
 
-
+    @Override
+    public String toString() {
+        return nomeMaterial;
+    }
    
     
 }

@@ -94,7 +94,8 @@ public class TelaAdminViewModel {
         int quantidade = Integer.parseInt(spQuantidade.getValue());
 
         if (atualizar) {
-            materiaisRepository.atualizarMaterial(nomeMaterial, quantidade);
+            Material material = selecionadoMaterial.get().getMaterial();
+            materiaisRepository.atualizarMaterial(material.getIdMaterial(),nomeMaterial, quantidade);
         }
         updateListMaterial();
 

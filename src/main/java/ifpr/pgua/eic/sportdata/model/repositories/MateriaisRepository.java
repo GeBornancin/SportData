@@ -32,13 +32,13 @@ public class MateriaisRepository {
         return Collections.unmodifiableList(materiais);
     }
 
-    public Result atualizarMaterial(String nomeMaterial, int novaQuantidade){
+    public Result atualizarMaterial(int idMaterial,String nomeMaterial, int novaQuantidade){
 
         Optional<Material> busca = materiais.stream().filter(mat->mat.getNomeMaterial().equals(nomeMaterial)).findFirst();
         if(busca.isPresent()){
             Material material = busca.get();
             material.setQuantidade(novaQuantidade);
-            return dao.update(material);
+            return dao.update(idMaterial, material);
         }
         
         if(novaQuantidade < 0) {

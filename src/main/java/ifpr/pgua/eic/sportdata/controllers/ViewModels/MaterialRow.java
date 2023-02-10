@@ -30,6 +30,7 @@ public class MaterialRow {
     public StringProperty quantidadeProperty(){
 
         return new SimpleStringProperty(String.valueOf(material.getQuantidade()));
+        
     }
 
 }

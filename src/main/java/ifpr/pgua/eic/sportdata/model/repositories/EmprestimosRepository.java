@@ -11,61 +11,31 @@ import ifpr.pgua.eic.sportdata.model.daos.MaterialDAO;
 import ifpr.pgua.eic.sportdata.model.entities.Aluno;
 import ifpr.pgua.eic.sportdata.model.entities.Material;
 import ifpr.pgua.eic.sportdata.model.entities.Emprestimo;
-import ifpr.pgua.eic.sportdata.model.entities.ItemEmprestimo;
 import ifpr.pgua.eic.sportdata.model.results.Result;
-import ifpr.pgua.eic.sportdata.model.results.SuccessResult;
+
+
 
 public class EmprestimosRepository {
 
-    public AlunoDAO alunoDao;
-    public EmprestimoDAO emprestimoDao;
-    public MaterialDAO materialDao;
+    private List<Emprestimo> emprestimos;
+
+    private AlunoDAO alunoDao;
+    private EmprestimoDAO emprestimoDao;
+    private MaterialDAO materialDao;
     
 
-    public EmprestimosRepository(EmprestimoDAO dao, AlunoDAO alunoDao, MaterialDAO materialDao) {
-        this.emprestimoDao = dao;
+    public EmprestimosRepository(EmprestimoDAO emprestimoDao, AlunoDAO alunoDao, MaterialDAO materialDao) {
+        this.emprestimoDao = emprestimoDao;
         this.alunoDao = alunoDao;
         this.materialDao = materialDao;
     }
 
-    public Result cadastrar(LocalDateTime dataHora, Aluno aluno, List<ItemEmprestimo> itens){
+    public Result cadastrar(LocalDateTime dataEmprestimo, Aluno aluno, Material material, int quantidadeEmprestada, LocalDateTime dataDevolucao){
         
-        if(aluno == null) {
-            return Result.fail("Aluno invalido");
-        }
-
-        if(dataHora.isAfter(LocalDateTime.now())) {
-            return Result.fail("Data e hora invalida");
-        }
-
-        if(itens.size() == 0){
-            return Result.fail("Nenhum item selecionado");
-        }
-
-        for(ItemEmprestimo item:itens){
-            if(item.getQuantidade() > item.getMaterial().getQuantidade()){
-                return Result.fail("Não há materiais o suficiente");
-            }
-        }
-
-        Emprestimo emprestimo = new Emprestimo(aluno, itens, dataHora);
-
-        Result resultado = emprestimoDao.create(emprestimo);
-
-        if(resultado instanceof SuccessResult) {
-
-            for(ItemEmprestimo item:emprestimo.getItens()){
-            
-            Material materialItem = item.getMaterial();
-
-            int quantidade = materialItem.getQuantidade() - item.getQuantidade();
-
-            Material novoMaterial = new Material(materialItem.getIdMaterial(), materialItem.getNomeMaterial(), quantidade);
-
-            }
-        }
+        Emprestimo emprestimo = new Emprestimo(aluno, material, quantidadeEmprestada, dataEmprestimo, dataDevolucao);
+       
         
-        return resultado;
+        return emprestimoDao.create(emprestimo);
 
     }
 
@@ -73,22 +43,22 @@ public class EmprestimosRepository {
         return alunoDao.getAlunoFromEmprestimo(id);
     }
 
-    private void carregarMaterialItemEmprestimo(Emprestimo emprestimo){
+    private Material carregaMaterialEmprestimo(int id){
 
-        for(ItemEmprestimo item:emprestimo.getItens()){
-            item.setMaterial(materialDao.getMaterialItem(item.getIdItemEmprestimo()));
-        }
+        return materialDao.getMaterialFromEmprestimo(id);
     }
+    
 
     public List<Emprestimo> listarEmprestimo(){
 
-        List<Emprestimo> emprestimos = emprestimoDao.getAll();
+        emprestimos = emprestimoDao.getAll();
 
         for(Emprestimo emprestimo:emprestimos){
             emprestimo.setAluno(carregaAlunoEmprestimo(emprestimo.getIdEmprestimo()));
+            emprestimo.setMaterial(carregaMaterialEmprestimo(emprestimo.getIdEmprestimo()));
         }
         
-        return emprestimos;
+        return Collections.unmodifiableList(emprestimos);
 
     }
 

@@ -38,12 +38,7 @@
                      </image>
                   </ImageView>
                   <PasswordField fx:id="tfPassword" layoutX="536.0" layoutY="463.0" prefHeight="42.0" prefWidth="300.0" promptText="Senha" />
-                  <Button layoutX="117.0" layoutY="179.0" mnemonicParsing="false" onAction="#carregaTelaAdmin" text="vai tela admin" />
-                  <ImageView disable="true" fitHeight="722.0" fitWidth="425.0" layoutX="474.0" layoutY="36.0" opacity="0.13" pickOnBounds="true">
-                     <image>
-                        <Image url="@imagens/fundo.png" />
-                     </image>
-                  </ImageView>
+               
                </children>
             </Pane>
          </children>

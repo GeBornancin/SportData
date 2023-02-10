@@ -8,6 +8,7 @@ import ifpr.pgua.eic.sportdata.model.entities.Emprestimo;
 public interface EmprestimoDAO {
 
     Result create(Emprestimo emprestimo);
+    
     List<Emprestimo> getAll();
 
 }

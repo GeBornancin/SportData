@@ -49,15 +49,15 @@ public class JDBCMaterialDAO implements MaterialDAO {
 	}
 
 	@Override
-	public Result update(Material obj) {
+	public Result update(int idMaterial, Material obj) {
 		try{
             Connection con = fabricaConexoes.getConnection();
 
             PreparedStatement pstm = con.prepareStatement(UPDATE);
 
             pstm.setString(1, obj.getNomeMaterial());
-            pstm.setInt(2, obj.getQuantidade());
-            pstm.setInt(3, obj.getIdMaterial());
+            pstm.setInt(2,obj.getQuantidade());
+            pstm.setInt(3,obj.getIdMaterial());
             
 
             pstm.execute();
@@ -77,7 +77,7 @@ public class JDBCMaterialDAO implements MaterialDAO {
 
     private Material buildFrom(ResultSet rs) throws SQLException{
 
-        int id = rs.getInt("idMaterial");
+        int  id = rs.getInt("idMaterial");
         String nomeMaterial = rs.getString("nomeMaterial");
         int quantidade = rs.getInt("quantidade");
 
@@ -168,31 +168,31 @@ public class JDBCMaterialDAO implements MaterialDAO {
 	}
 
     @Override
-    public Material getMaterialItem(int itemId){
-        Material material = null;
+    public Material getMaterialFromEmprestimo(int idEmprestimo) {
+        Material m = null;
+        try{
 
-        try{    
             Connection con = fabricaConexoes.getConnection();
 
-            PreparedStatement pstm = con.prepareStatement("SELECT idMaterial FROM itememprestimo WHERE id=?");
+            PreparedStatement pstm = con.prepareStatement("SELECT idMaterial FROM pi_emprestimo WHERE idMaterial=?");
 
-            pstm.setInt(1, itemId);
+            pstm.setInt(1, idEmprestimo);
 
-            ResultSet resultSetidMaterial = pstm.executeQuery();
-            resultSetidMaterial.next();
+            ResultSet resultSetIdMaterial = pstm.executeQuery();
+            resultSetIdMaterial.next();
 
-            int idMaterial = resultSetidMaterial.getInt("idMaterial");
+            int idMaterial = resultSetIdMaterial.getInt("idMaterial");
 
-            resultSetidMaterial.close();
+            m = getById(idMaterial);
+
+            resultSetIdMaterial.close();
             pstm.close();
             con.close();
-
-            material = getById(idMaterial);
 
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
-        return material;
+        return m;
     }
     
 }

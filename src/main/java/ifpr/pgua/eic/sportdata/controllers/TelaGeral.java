@@ -5,27 +5,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import com.mysql.cj.xdevapi.Result;
+
 
 import ifpr.pgua.eic.sportdata.App;
-import ifpr.pgua.eic.sportdata.controllers.ViewModels.ItemEmprestimoRow;
 import ifpr.pgua.eic.sportdata.controllers.ViewModels.MaterialRow;
 import ifpr.pgua.eic.sportdata.controllers.ViewModels.TelaGeralViewModel;
 import ifpr.pgua.eic.sportdata.model.entities.Emprestimo;
-import ifpr.pgua.eic.sportdata.model.entities.ItemEmprestimo;
 import ifpr.pgua.eic.sportdata.model.entities.Material;
 import ifpr.pgua.eic.sportdata.utils.Navigator.BorderPaneRegion;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.beans.InvalidationListener;
+import javafx.scene.input.MouseEvent;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
 
 public class TelaGeral extends BaseController implements Initializable {
 
@@ -33,27 +29,27 @@ public class TelaGeral extends BaseController implements Initializable {
     private TableView<MaterialRow> tbItensDisponiveis;
 
     @FXML
-    private TableColumn<ItemEmprestimo, String> tbcNomeMaterial;
+    private TableColumn<MaterialRow, String> tbcNomeMaterial;
 
     @FXML
-    private TableColumn<ItemEmprestimo, String> tbcQuantidade;
+    private TableColumn<MaterialRow, String> tbcQuantidade;
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     @FXML
-    private TableView<ItemEmprestimo> tbEmprestimos;
+    private TableView<Emprestimo> tbEmprestimos;
 
     @FXML
     private TableColumn<Emprestimo, String> tbcAluno;
 
     @FXML
-    private TableColumn<Emprestimo, String> tbcItensEmprestimo;
+    private TableColumn<Emprestimo, String> tbcMaterial;
 
     @FXML
     private TableColumn<Emprestimo, String> tbcData;
 
     @FXML
-    private ComboBox<Material> cbMaterial;
+    private TextField tfMaterial;
 
 
     @FXML
@@ -86,30 +82,16 @@ public class TelaGeral extends BaseController implements Initializable {
         tbItensDisponiveis.setItems(viewModel.getMateriais());
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-
-        this.cbMaterial.setItems(viewModel.getMateriaisCb());
+        viewModel.getMaterialSelecionadoProperty().bind(tbItensDisponiveis.getSelectionModel().selectedItemProperty());
+        tfMaterial.editableProperty().bind(viewModel.podeEditarProperty());
 
         this.tfQuantidade.textProperty().bindBidirectional(viewModel.getQuantidadeProperty());
-
-
-
-        this.cbMaterial.selectionModelProperty().addListener((InvalidationListener) new ChangeListener<Material>() {
-            @Override
-            public void changed(ObservableValue<? extends Material> arg0, Material arg1, Material arg2) {
-                viewModel.getMaterialProperty().set(arg2);
-
-            }
-
-        });
-
-        tbcAluno.setCellValueFactory(emprestimo -> new SimpleStringProperty(emprestimo.getValue().getAluno().getNomeAluno()));
-        tbcItensEmprestimo.setCellValueFactory(emprestimo -> new SimpleStringProperty(emprestimo.getValue().getItens()+""));
-        tbcData.setCellValueFactory(emprestimo -> new SimpleStringProperty(emprestimo.getValue().getDataEmprestimo()+""));
+        this.tfMaterial.textProperty().bindBidirectional(viewModel.getMaterial());
         
-        tbEmprestimos.setItems(viewModel.getItensEmprestimo());
+
+        
+        
+        
 
         viewModel.carregaListas();
 
@@ -118,8 +100,15 @@ public class TelaGeral extends BaseController implements Initializable {
     @FXML
     private void emprestarItem(){
         viewModel.emprestarItem();
-    
+    }
 
+    @FXML
+    private void atualizarMaterial(MouseEvent evt) {
+
+        if(evt.getClickCount() == 2) {
+            viewModel.preencheTextFieldsParaAtualizar();
+     
+       }
     }
 
 }

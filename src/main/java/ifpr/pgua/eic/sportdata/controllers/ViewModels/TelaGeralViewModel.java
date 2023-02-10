@@ -1,17 +1,20 @@
 package ifpr.pgua.eic.sportdata.controllers.ViewModels;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import ifpr.pgua.eic.sportdata.model.entities.Aluno;
-import ifpr.pgua.eic.sportdata.model.entities.ItemEmprestimo;
 import ifpr.pgua.eic.sportdata.model.entities.Material;
+import ifpr.pgua.eic.sportdata.model.entities.Emprestimo;
 import ifpr.pgua.eic.sportdata.model.entities.Sessao;
 import ifpr.pgua.eic.sportdata.model.repositories.AlunosRepository;
 import ifpr.pgua.eic.sportdata.model.repositories.EmprestimosRepository;
 import ifpr.pgua.eic.sportdata.model.repositories.MateriaisRepository;
 import ifpr.pgua.eic.sportdata.model.results.Result;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -22,23 +25,42 @@ public class TelaGeralViewModel {
 
     private LocalDateTime dataEmprestimo;
     private LocalDateTime dataDevolucao;
+    private StringProperty spMaterial = new SimpleStringProperty();
     private StringProperty spQuantidade = new SimpleStringProperty();
 
+    private BooleanProperty podeEditar = new SimpleBooleanProperty(true);
+    private StringProperty operacao = new SimpleStringProperty("Editar");
+    private boolean atualizar = false;
+
+    public BooleanProperty podeEditarProperty() {
+
+        return podeEditar;
+    }
+
+    public StringProperty operacaoProperty() {
+
+        return operacao;
+    }
     private ObjectProperty<Material> materialProperty = new SimpleObjectProperty<>();
     private ObjectProperty<Aluno> alunoProperty = new SimpleObjectProperty<>();
 
+    private ObservableList<Emprestimo> emprestimos = FXCollections.observableArrayList();
+    private ObservableList<EmprestimoRow> obsEmprestimos = FXCollections.observableArrayList();
     private ObservableList<Material> materiais = FXCollections.observableArrayList();
+    private ObservableList<MaterialRow> obsMateriais = FXCollections.observableArrayList();
     private ObservableList<AlunoRow> obsAlunos = FXCollections.observableArrayList();
-    public ObservableList<MaterialRow> obsMateriais = FXCollections.observableArrayList();
+    
+    private ObjectProperty<EmprestimoRow> dataEmprestimoProperty = new SimpleObjectProperty<>();
+    private ObjectProperty<MaterialRow> materialSelecionadoProperty = new SimpleObjectProperty<>();
 
-    private ObjectProperty<ItemEmprestimoRow> linhaSelecionadaProperty = new SimpleObjectProperty<>();
-
-    private ObservableList<ItemEmprestimo> itensEmprestimo = FXCollections.observableArrayList();
-
-    public ObjectProperty<ItemEmprestimoRow> getLinhaSelecionadaProperty(){
-		return linhaSelecionadaProperty;
-
+    public ObjectProperty<MaterialRow> getMaterialSelecionadoProperty(){
+		return materialSelecionadoProperty;
     }
+
+    public ObjectProperty<EmprestimoRow> getDataEmprestimopProperty(){
+        return dataEmprestimoProperty;
+    }
+    
 
     private MateriaisRepository materiaisRepository;
     private AlunosRepository alunosRepository;
@@ -54,18 +76,18 @@ public class TelaGeralViewModel {
         this.emprestimosRepository = emprestimosRepository;
 
         dataEmprestimo  = LocalDateTime.now();
-        dataDevolucao = LocalDateTime.now();
+        
+        // dataDevolucao = LocalDateTime.now();
         updateListMaterial();
-        updateListAluno();
+        updateListEmprestimo();
     }
     
     
-    
-    
-    
-    public ObservableList<ItemEmprestimo> getItensEmprestimo(){
-        return itensEmprestimo;
+    public ObservableList<Emprestimo> getEmprestimos() {
+
+        return this.emprestimos;
     }
+
 
     public ObservableList<MaterialRow> getMateriais() {
 
@@ -76,10 +98,7 @@ public class TelaGeralViewModel {
         return this.obsAlunos;
     }
 
-    public ObservableList<Material> getMateriaisCb(){
-        return materiais;
-    }
-
+   
     private void updateListMaterial() {
         obsMateriais.clear();
         for (Material m : materiaisRepository.listarMaterial()) {
@@ -95,12 +114,24 @@ public class TelaGeralViewModel {
 
     }
 
+    private void updateListEmprestimo() {
+        obsEmprestimos.clear();
+        for (Emprestimo e : emprestimosRepository.listarEmprestimo()) {
+            obsEmprestimos.add(new EmprestimoRow(e));
+        }
+    }
+
 
     public void carregaListas(){
        materiais.clear();
        materiais.addAll(materiaisRepository.listarMaterial());
     }
     
+    public StringProperty getMaterial(){
+
+        return  spMaterial;
+    }
+
     public StringProperty getQuantidadeProperty(){
         return spQuantidade;
     }
@@ -113,38 +144,48 @@ public class TelaGeralViewModel {
         return materialProperty;
     }
 
-    public Result emprestarItem(){
+    public void emprestarItem(){
 
-        if(materialProperty.get() == null) {
-            return Result.fail("Nenhum produto adicionado");
-        }
-
-        int quantidade = 0;
-        try{
-            quantidade = Integer.parseInt(spQuantidade.getValue());
-        }catch(NumberFormatException e) {
-            return Result.fail("Quantidade invalida");
-        }
-
-        if(quantidade == 0){
-            return Result.fail("");
-        }
-
-        ItemEmprestimo item = new ItemEmprestimo();
-        Material material = materialProperty.get();
-       
-        item.setMaterial(material);
-        item.setQuantidade(quantidade);
-
-        itensEmprestimo.add(item);
 
         Aluno aluno = Sessao.getInstance().getAluno();
+        Material material = materialSelecionadoProperty.get().getMaterial();
+        int quantidadeEmprestada = Integer.parseInt(spQuantidade.getValue());
 
-        return emprestimosRepository.cadastrar(dataEmprestimo, aluno, itensEmprestimo);
-    
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yy H:mm");
+        String text = dataEmprestimo.format(formatter);
+        LocalDateTime dataEmprestimoFormat = LocalDateTime.parse(text, formatter);
+        LocalDateTime dataDevolucao = LocalDateTime.parse(text, formatter);
+
         
+
+        emprestimosRepository.cadastrar(dataEmprestimoFormat, aluno, material, quantidadeEmprestada, dataDevolucao);
+
+        updateListMaterial();
+        updateListEmprestimo();
+        
+        System.out.println(""+ aluno + material + dataEmprestimoFormat + quantidadeEmprestada);
+
     }
 
+    
+    
+    public void preencheTextFieldsParaAtualizar(){
+
+        operacao.setValue("Editar");
+        podeEditar.setValue(false);
+        atualizar = true;
+    
+        if(materialSelecionadoProperty.get() != null){
+            Material material = materialSelecionadoProperty.get().getMaterial();
+
+            spMaterial.setValue(material.getNomeMaterial());
+            
+         
+            
+            
+        }
+
+    }
     
 
 }

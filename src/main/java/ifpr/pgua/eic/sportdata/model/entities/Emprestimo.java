@@ -10,14 +10,32 @@ public class Emprestimo {
     
     private int idEmprestimo;
     private Aluno aluno;
-    private List<ItemEmprestimo> itens;
+    private Material material;
+    private int quantidadeEmprestada;
     private LocalDateTime dataEmprestimo;
     private LocalDateTime dataDevolucao;
 
-    public Emprestimo(int idEmprestimo, Aluno aluno, List<ItemEmprestimo> itens, LocalDateTime dataEmprestimo, LocalDateTime dtDevolucao) {
+    
+    public Emprestimo(Aluno aluno, Material material, int quantidadeEmprestada, LocalDateTime dataEmprestimo, LocalDateTime dataDevolucao) {
+        this.aluno = aluno;
+        this.material = material;
+        this.quantidadeEmprestada = quantidadeEmprestada;
+        this.dataEmprestimo = dataEmprestimo;
+        this.dataDevolucao = dataDevolucao;
+    }
+
+    public Emprestimo(int idEmprestimo, LocalDateTime dataEmprestimo, int quantidadeEmprestada,
+            LocalDateTime dataDevolucao) {
+        this.idEmprestimo = idEmprestimo;
+        this.quantidadeEmprestada = quantidadeEmprestada;
+        this.dataEmprestimo = dataEmprestimo;
+        this.dataDevolucao = dataDevolucao;
+    }
+
+    public Emprestimo(int idEmprestimo, Aluno aluno, Material material, LocalDateTime dataEmprestimo, LocalDateTime dataDevolucao) {
         this.idEmprestimo = idEmprestimo;
         this.aluno = aluno;
-        this.itens = itens;
+        this.material = material;
         this.dataEmprestimo = dataEmprestimo;
         this.dataDevolucao = dataDevolucao;
     }
@@ -27,44 +45,11 @@ public class Emprestimo {
         this.dataEmprestimo = dataEmprestimo;
     }
 
-    public Emprestimo(Aluno aluno, List<ItemEmprestimo> itens, LocalDateTime dataEmprestimo) {
+    public Emprestimo(Aluno aluno, Material material, LocalDateTime dataEmprestimo) {
         this.aluno = aluno;
-        this.itens = itens;
+        this.material = material;
         this.dataEmprestimo = dataEmprestimo;
     }
-
-    public void adicionarMaterial(Material m,int quantidade){
-        
-        Optional<ItemEmprestimo> item =  itens.stream().filter((it)->it.getMaterial().getIdMaterial()==m.getIdMaterial()).findFirst();
-        
-        if(item.isPresent()){
-            ItemEmprestimo it =item.get();
-            it.setQuantidade(it.getQuantidade()+quantidade);
-        }else{
-            ItemEmprestimo it = new ItemEmprestimo();
-            it.setMaterial(m);
-            it.setQuantidade(quantidade);
-            itens.add(it);
-        }
-    }
-    
-
-
-    public boolean removerMaterial(Material m, int quantidade) {
-        
-        Optional<ItemEmprestimo> item = itens.stream().filter((it)->it.getMaterial().getIdMaterial()==m.getIdMaterial()).findFirst();
-
-        if(item.isPresent()) {
-            ItemEmprestimo it = item.get();
-            it.setQuantidade(it.getQuantidade() - quantidade);
-            if(it.getQuantidade() <= 0) {
-                itens.remove(it);
-            }
-            return true;
-        }
-        return false;
-    }
-
 
         public int getIdEmprestimo() {
             return idEmprestimo;
@@ -82,12 +67,12 @@ public class Emprestimo {
             this.aluno = aluno;
         }
 
-        public List<ItemEmprestimo> getItens() {
-            return itens;
-        }
+        public Material getMaterial() {
+		    return material;
+	    }   
 
-        public void setItens(List<ItemEmprestimo> itens) {
-            this.itens = itens;
+        public void setMaterial(Material material) {
+            this.material = material;
         }
 
         public LocalDateTime getDataEmprestimo() {
@@ -106,4 +91,11 @@ public class Emprestimo {
             this.dataDevolucao = dataDevolucao;
         }
 
+        public int getQuantidadeEmprestada() {
+            return quantidadeEmprestada;
+        }
+
+            public void setQuantidadeEmprestada(int quantidadeEmprestada) {
+            this.quantidadeEmprestada = quantidadeEmprestada;
+        }
 }
