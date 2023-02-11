@@ -51,9 +51,11 @@ public class TelaGeral extends BaseController implements Initializable {
     @FXML
     private TextField tfMaterial;
 
-
     @FXML
     private TextField tfQuantidade;
+
+    @FXML
+    private TextField tfAluno;
 
     private TelaGeralViewModel viewModel;
 
@@ -82,18 +84,14 @@ public class TelaGeral extends BaseController implements Initializable {
         tbItensDisponiveis.setItems(viewModel.getMateriais());
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-        viewModel.getMaterialSelecionadoProperty().bind(tbItensDisponiveis.getSelectionModel().selectedItemProperty());
-        tfMaterial.editableProperty().bind(viewModel.podeEditarProperty());
+        
+        
 
         this.tfQuantidade.textProperty().bindBidirectional(viewModel.getQuantidadeProperty());
         this.tfMaterial.textProperty().bindBidirectional(viewModel.getMaterial());
-        
-
-        
+        this.tfAluno.textProperty().bindBidirectional(viewModel.getAlunoStringProperty());
         
         
-
-        viewModel.carregaListas();
 
     }
 
@@ -102,13 +100,7 @@ public class TelaGeral extends BaseController implements Initializable {
         viewModel.emprestarItem();
     }
 
-    @FXML
-    private void atualizarMaterial(MouseEvent evt) {
-
-        if(evt.getClickCount() == 2) {
-            viewModel.preencheTextFieldsParaAtualizar();
-     
-       }
-    }
+    
+    
 
 }

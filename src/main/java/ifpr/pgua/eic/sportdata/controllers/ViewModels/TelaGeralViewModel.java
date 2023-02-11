@@ -23,24 +23,12 @@ import javafx.collections.ObservableList;
 
 public class TelaGeralViewModel {
 
-    private LocalDateTime dataEmprestimo;
-    private LocalDateTime dataDevolucao;
     private StringProperty spMaterial = new SimpleStringProperty();
     private StringProperty spQuantidade = new SimpleStringProperty();
+    private StringProperty spAluno = new SimpleStringProperty();
 
-    private BooleanProperty podeEditar = new SimpleBooleanProperty(true);
-    private StringProperty operacao = new SimpleStringProperty("Editar");
-    private boolean atualizar = false;
 
-    public BooleanProperty podeEditarProperty() {
-
-        return podeEditar;
-    }
-
-    public StringProperty operacaoProperty() {
-
-        return operacao;
-    }
+    
     private ObjectProperty<Material> materialProperty = new SimpleObjectProperty<>();
     private ObjectProperty<Aluno> alunoProperty = new SimpleObjectProperty<>();
 
@@ -75,13 +63,14 @@ public class TelaGeralViewModel {
         this.materiaisRepository = materiaisRepository;
         this.emprestimosRepository = emprestimosRepository;
 
-        dataEmprestimo  = LocalDateTime.now();
+        
         
         // dataDevolucao = LocalDateTime.now();
         updateListMaterial();
         updateListEmprestimo();
     }
-    
+
+
     
     public ObservableList<Emprestimo> getEmprestimos() {
 
@@ -106,14 +95,6 @@ public class TelaGeralViewModel {
         }
     }
 
-    private void updateListAluno() {
-        obsAlunos.clear();
-        for (Aluno a : alunosRepository.listarAluno()) {
-            obsAlunos.add(new AlunoRow(a));
-        }
-
-    }
-
     private void updateListEmprestimo() {
         obsEmprestimos.clear();
         for (Emprestimo e : emprestimosRepository.listarEmprestimo()) {
@@ -122,11 +103,7 @@ public class TelaGeralViewModel {
     }
 
 
-    public void carregaListas(){
-       materiais.clear();
-       materiais.addAll(materiaisRepository.listarMaterial());
-    }
-    
+
     public StringProperty getMaterial(){
 
         return  spMaterial;
@@ -134,6 +111,10 @@ public class TelaGeralViewModel {
 
     public StringProperty getQuantidadeProperty(){
         return spQuantidade;
+    }
+
+    public StringProperty getAlunoStringProperty(){
+        return spAluno;
     }
 
     public ObjectProperty<Aluno> getAlunoProperty(){
@@ -146,46 +127,29 @@ public class TelaGeralViewModel {
 
     public void emprestarItem(){
 
+        Aluno aluno = alunosRepository.getAlunoByCpf(spAluno.getValue());
+        Material material = materiaisRepository.getMaterialByNome(spMaterial.getValue());
+        int quantidadeEmprestada = Integer.valueOf(spQuantidade.getValue());
+        LocalDateTime dataEmprestimo = LocalDateTime.now();
+        LocalDateTime dataDevolucao = null;
 
-        Aluno aluno = Sessao.getInstance().getAluno();
-        Material material = materialSelecionadoProperty.get().getMaterial();
-        int quantidadeEmprestada = Integer.parseInt(spQuantidade.getValue());
+        emprestimosRepository.cadastrar(dataEmprestimo, aluno, material, quantidadeEmprestada, dataDevolucao);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yy H:mm");
-        String text = dataEmprestimo.format(formatter);
-        LocalDateTime dataEmprestimoFormat = LocalDateTime.parse(text, formatter);
-        LocalDateTime dataDevolucao = LocalDateTime.parse(text, formatter);
-
-        
-
-        emprestimosRepository.cadastrar(dataEmprestimoFormat, aluno, material, quantidadeEmprestada, dataDevolucao);
-
-        updateListMaterial();
         updateListEmprestimo();
-        
-        System.out.println(""+ aluno + material + dataEmprestimoFormat + quantidadeEmprestada);
+        limpar();
+
 
     }
 
-    
-    
-    public void preencheTextFieldsParaAtualizar(){
+    public void limpar(){
 
-        operacao.setValue("Editar");
-        podeEditar.setValue(false);
-        atualizar = true;
-    
-        if(materialSelecionadoProperty.get() != null){
-            Material material = materialSelecionadoProperty.get().getMaterial();
-
-            spMaterial.setValue(material.getNomeMaterial());
-            
-         
-            
-            
-        }
-
+        spAluno.setValue("");
+        spMaterial.setValue("");
+        spQuantidade.setValue("");
     }
+
+    
+   
     
 
 }

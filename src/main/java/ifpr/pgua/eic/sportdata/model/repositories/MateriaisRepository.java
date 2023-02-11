@@ -50,6 +50,17 @@ public class MateriaisRepository {
 
     }
 
+    public Material getMaterialByNome(String nomeMaterial){
+        Material material = null;
+
+        for(Material m: materiais){
+            if(m.getNomeMaterial().equals(nomeMaterial)){
+                material = m;
+            }
+        }
+        return material;
+    }
+
     public Result deleteMaterial(int idMaterial){
 
         return dao.deleteMaterial(idMaterial);

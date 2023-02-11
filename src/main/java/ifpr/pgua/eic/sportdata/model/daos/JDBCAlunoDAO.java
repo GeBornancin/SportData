@@ -195,10 +195,12 @@ public class JDBCAlunoDAO implements AlunoDAO {
     }
 
     public Aluno login(String cpf, String senha){
+        Connection con = null;
+        PreparedStatement pstm = null;
         try {
             Aluno aluno;
-            Connection con = fabricaConexoes.getConnection();
-            PreparedStatement pstm = con.prepareStatement("SELECT * from pi_aluno where cpf = ? and senha = ?");
+            con = fabricaConexoes.getConnection();
+            pstm = con.prepareStatement("SELECT * from pi_aluno where cpf =? and senha =?");
 
             pstm.setString(1, cpf);
             pstm.setString(2, senha);
@@ -207,24 +209,30 @@ public class JDBCAlunoDAO implements AlunoDAO {
             ResultSet rs = pstm.executeQuery();
 
 
-            if(rs == null){
-                    return null;
-                }else {
-                    rs.next();
+            if(rs.next()){
                     aluno = new Aluno(rs.getInt(1), cpf , rs.getString(3), rs.getString(4), senha );
+                    return aluno;
+                }else {
+                    return null;
     
                 }
     
-                rs.close();
-                pstm.close();
-                con.close();
-                return aluno;
+                
+                
     
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                return null;
+                throw new RuntimeException(e);
+            }finally {
+                if (con != null) {
+                    try {
+                        con.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                
+                }
             }
-    
 
     }
 

@@ -56,15 +56,28 @@ public class AlunosRepository {
         return Collections.unmodifiableList(alunos);
     }
 
+
     public Result deleteAluno(int idAluno){
 
         return dao.deleteAluno(idAluno);
 
     }
 
+    public Aluno getAlunoByCpf(String cpf){
+        Aluno aluno = null;
+
+        for(Aluno a: alunos){
+            if(a.getCpf().equals(cpf)){
+                aluno = a;
+            }
+        }
+        return aluno;
+    }
+
     public Aluno loginAluno(String cpf, String senha){
         return dao.login(cpf, senha);
     }
+
 
 
 

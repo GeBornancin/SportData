@@ -32,24 +32,9 @@ public class Emprestimo {
         this.dataDevolucao = dataDevolucao;
     }
 
-    public Emprestimo(int idEmprestimo, Aluno aluno, Material material, LocalDateTime dataEmprestimo, LocalDateTime dataDevolucao) {
-        this.idEmprestimo = idEmprestimo;
-        this.aluno = aluno;
-        this.material = material;
-        this.dataEmprestimo = dataEmprestimo;
-        this.dataDevolucao = dataDevolucao;
-    }
+   
 
-    public Emprestimo(int idEmprestimo, LocalDateTime dataEmprestimo) {
-        this.idEmprestimo = idEmprestimo;
-        this.dataEmprestimo = dataEmprestimo;
-    }
-
-    public Emprestimo(Aluno aluno, Material material, LocalDateTime dataEmprestimo) {
-        this.aluno = aluno;
-        this.material = material;
-        this.dataEmprestimo = dataEmprestimo;
-    }
+   
 
         public int getIdEmprestimo() {
             return idEmprestimo;

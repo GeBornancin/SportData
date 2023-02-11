@@ -38,6 +38,7 @@
                      </image>
                   </ImageView>
                   <PasswordField fx:id="tfPassword" layoutX="536.0" layoutY="463.0" prefHeight="42.0" prefWidth="300.0" promptText="Senha" />
+                  <Button layoutX="223.0" layoutY="152.0" mnemonicParsing="false" onAction="#carregaTelaGeral" prefHeight="277.0" prefWidth="103.0" text="geral" />
                
                </children>
             </Pane>

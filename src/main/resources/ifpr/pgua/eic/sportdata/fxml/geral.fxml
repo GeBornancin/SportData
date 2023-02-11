@@ -21,6 +21,7 @@
             <Button layoutX="1272.0" layoutY="46.0" mnemonicParsing="false" onAction="#carregaTelaAdmin" text="admin" />
             <Button layoutX="706.0" layoutY="166.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="78.0" text="Devolver" />
             <TextField fx:id="tfMaterial" layoutX="520.0" layoutY="51.0" prefHeight="40.0" prefWidth="241.0" />
+            <TextField fx:id="tfAluno" layoutX="797.0" layoutY="99.0" prefHeight="40.0" prefWidth="241.0" />
          </children>
       </Pane>
       <Pane prefHeight="575.0" prefWidth="1366.0">
@@ -28,7 +29,7 @@
             <Label layoutX="1008.0" layoutY="2.0" prefHeight="25.0" prefWidth="69.0" text="Empréstimos" />
             <HBox layoutX="108.0" layoutY="25.0" prefHeight="526.0" prefWidth="467.0">
                <children>
-                  <TableView fx:id="tbItensDisponiveis" prefHeight="551.0" prefWidth="466.0" onMouseClicked="#atualizarMaterial">
+                  <TableView fx:id="tbItensDisponiveis" prefHeight="551.0" prefWidth="466.0">
                     <columns>
                       <TableColumn fx:id="tbcNomeMaterial" prefWidth="233.0" text="Material" />
                       <TableColumn fx:id="tbcQuantidade" prefWidth="231.0" text="Quantidade" />
