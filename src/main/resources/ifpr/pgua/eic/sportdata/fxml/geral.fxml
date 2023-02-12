@@ -5,6 +5,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -13,15 +15,21 @@
    <children>
       <Pane prefHeight="197.0" prefWidth="645.0">
          <children>
-            <Label layoutX="87.0" layoutY="114.0" prefHeight="17.0" prefWidth="47.0" styleClass="texto" text="Material:" />
-            <Label layoutX="423.0" layoutY="117.0" styleClass="texto" text="Quantidade:" />
-            <TextField fx:id="tfQuantidade" layoutX="504.0" layoutY="106.0" prefHeight="40.0" prefWidth="241.0" />
-            <Button layoutX="497.0" layoutY="166.0" mnemonicParsing="false" onAction="#emprestarItem" prefHeight="40.0" prefWidth="78.0" text="Emprestar" />
-            <Button layoutX="602.0" layoutY="166.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="78.0" text="Limpar" />
-            <Button fx:id="btDevolver" layoutX="706.0" layoutY="166.0" mnemonicParsing="false" onAction="#devolver" prefHeight="40.0" prefWidth="78.0" text="Devolver" />
-            <TextField fx:id="tfMaterial" layoutX="153.0" layoutY="105.0" prefHeight="40.0" prefWidth="241.0" />
-            <TextField fx:id="tfAluno" layoutX="914.0" layoutY="106.0" prefHeight="40.0" prefWidth="241.0" />
-            <Label layoutX="855.0" layoutY="118.0" prefHeight="17.0" prefWidth="47.0" styleClass="texto" text="Aluno" />
+            <Label layoutX="76.0" layoutY="114.0" prefHeight="17.0" prefWidth="47.0" styleClass="texto" text="Material:" />
+            <Label layoutX="61.0" layoutY="63.0" styleClass="texto" text="Quantidade:" />
+            <TextField fx:id="tfQuantidade" layoutX="142.0" layoutY="52.0" prefHeight="40.0" prefWidth="241.0" />
+            <Button layoutX="486.0" layoutY="111.0" mnemonicParsing="false" onAction="#emprestarItem" prefHeight="40.0" prefWidth="78.0" text="Emprestar" />
+            <Button layoutX="568.0" layoutY="111.0" mnemonicParsing="false" onAction="#limpar" prefHeight="40.0" prefWidth="78.0" text="Limpar" />
+            <Button fx:id="btDevolver" layoutX="649.0" layoutY="111.0" mnemonicParsing="false" onAction="#devolver" prefHeight="40.0" prefWidth="78.0" text="Devolver" />
+            <TextField fx:id="tfMaterial" layoutX="142.0" layoutY="105.0" prefHeight="40.0" prefWidth="241.0" />
+            <TextField fx:id="tfAluno" layoutX="486.0" layoutY="52.0" prefHeight="40.0" prefWidth="241.0" />
+            <Label layoutX="427.0" layoutY="64.0" prefHeight="17.0" prefWidth="47.0" styleClass="texto" text="Aluno" />
+            <ImageView disable="true" fitHeight="40.0" fitWidth="78.0" layoutX="1275.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imagens/sign-out.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="1275.0" layoutY="23.0" mnemonicParsing="false" onAction="#encerrarSessao" opacity="0.31" prefHeight="40.0" prefWidth="40.0" />
          </children>
       </Pane>
       <Pane prefHeight="575.0" prefWidth="1366.0">
@@ -52,7 +60,6 @@
                </children>
             </HBox>
             <Label layoutX="286.0" layoutY="6.0" text="Materiais disponiveis" />
-            <Button layoutX="14.0" layoutY="534.0" mnemonicParsing="false" onAction="#encerrarSessao" prefHeight="25.0" prefWidth="65.0" text="Sair" />
          </children>
       </Pane>
    </children>

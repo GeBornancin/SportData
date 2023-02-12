@@ -39,7 +39,6 @@ public class TelaLoginViewModel {
 
 
     public boolean entrar(){
-
         String user = spUser.getValue();
         String password = spPassword.getValue();
         Sessao sessao = Sessao.getInstance();
@@ -63,9 +62,13 @@ public class TelaLoginViewModel {
             alert.setHeaderText("Campo Senha Vazio");
             alert.showAndWait();
             return false;
-        }else {
+        }else if (alunoKey == null) {
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setHeaderText("Usuario ou Senha Incorretos");
+            alert.showAndWait();
             return false;
         }
+        return false;
     }
     
 }

@@ -17,7 +17,7 @@ public class JDBCMaterialDAO implements MaterialDAO {
     private static final String UPDATE = "UPDATE pi_material set nomeMaterial=?, quantidade=? WHERE idMaterial=?";
     private static final String SELECT_ALL = "SELECT * FROM pi_material";
     private static final String SELECT_ID = "SELECT * FROM pi_material WHERE idMaterial=?";
-    private static final String DELETE = "DELETE FROM pi_material WHERE idMaterial=?";
+    
 
     private FabricaConexoes fabricaConexoes;
 
@@ -143,29 +143,23 @@ public class JDBCMaterialDAO implements MaterialDAO {
 	}
 
 	@Override
-	public Result deleteMaterial(int idMaterial) {
-        
-        try{
+public Result deleteMaterial(int idMaterial) {
+    try (Connection con = fabricaConexoes.getConnection();
+         PreparedStatement pstmDeleteEmprestimo = con.prepareStatement("DELETE FROM pi_emprestimo WHERE idMaterial=?");
+         PreparedStatement pstmDeleteMaterial = con.prepareStatement("DELETE FROM pi_material WHERE idMaterial=?")) {
 
-            Connection con = fabricaConexoes.getConnection(); 
-            PreparedStatement pstm = con.prepareStatement(DELETE);
-            
-            pstm.setInt(1, idMaterial);
+        pstmDeleteEmprestimo.setInt(1, idMaterial);
+        pstmDeleteEmprestimo.executeUpdate();
 
-            pstm.execute();
+        pstmDeleteMaterial.setInt(1, idMaterial);
+        pstmDeleteMaterial.executeUpdate();
 
-            pstm.close();
-            con.close();
-
-            return Result.success("apagado");
-                
-            }catch(SQLException e){
-            System.out.println(" Erro no detele Material" + e.getMessage());
-            return null;
-        }
-        
-		
-	}
+        return Result.success("Material excluido com sucesso");
+    } catch (SQLException e) {
+        System.out.println("Erro ao excluir material: " + e.getMessage());
+        return Result.fail("Erro ao excluir material");
+    }
+}
 
     @Override
     public Material getMaterialFromEmprestimo(int idEmprestimo) {

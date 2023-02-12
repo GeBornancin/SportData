@@ -34,32 +34,36 @@ public class TelaLoginAdminViewModel {
         String user = spUser.getValue();
         String password = spPassword.getValue();
         Sessao sessao = Sessao.getInstance();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
-        if (user.equals("admin") && password.equals("admin")) {
-            alert.setAlertType(Alert.AlertType.INFORMATION);
-            sessao.setAluno(null);
-            sessao.setAdmin(true);
-            alert.setHeaderText("Bem-vindo, administrador");
-            alert.showAndWait();
-
-            return true;
-        } else if (user == null) {
+        if (user == null || user.trim().isEmpty()) {
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setHeaderText("Campo Usuario Vazio");
             alert.showAndWait();
             return false;
 
-        } else if (password == null) {
+        } else if (password == null || password.trim().isEmpty()) {
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setHeaderText("Campo Senha Vazio");
             alert.showAndWait();
             return false;
+        } else if (user.equals("admin") && password.equals("admin")) {
+            alert.setHeaderText("Bem-vindo, administrador");
+            sessao.setAluno(null);
+            sessao.setAdmin(true);
+            alert.showAndWait();
+
+            return true;
+        } else if (!user.equals("admin")) {
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setHeaderText("Usuario Incorreto");
+            alert.showAndWait();
+            return false;
         } else {
             alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setHeaderText("Usuario ou Senha Incorretos");
+            alert.setHeaderText("Senha Incorreta");
             alert.showAndWait();
             return false;
         }
     }
-
 }

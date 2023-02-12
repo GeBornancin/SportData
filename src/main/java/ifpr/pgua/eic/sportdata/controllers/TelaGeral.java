@@ -137,6 +137,11 @@ public class TelaGeral extends BaseController implements Initializable {
     }
 
     @FXML
+    public void limpar(){
+        viewModel.limpar();
+    }
+
+    @FXML
     public void encerrarSessao(){
         viewModel.encerrarSessao();
         carregaTelaLogin();

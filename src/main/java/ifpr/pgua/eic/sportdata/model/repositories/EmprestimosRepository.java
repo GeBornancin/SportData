@@ -68,17 +68,22 @@ public class EmprestimosRepository {
 
     }
 
-    public Result devolver(Emprestimo emprestimo){
-
+    public Result devolver(Emprestimo emprestimo) {
         emprestimo.setDataDevolucao(LocalDateTime.now());
-
-        Material material =emprestimo.getMaterial();
+    
+        Material material = emprestimo.getMaterial();
         int quantidadeAtual = emprestimo.getMaterial().getQuantidade();
-        emprestimo.getMaterial().setQuantidade(quantidadeAtual  + emprestimo.getQuantidadeEmprestada());
-
-        materialDao.update(material.getIdMaterial(),material);
-
+        int quantidadeDevolvida = emprestimo.getQuantidadeEmprestada();
+    
+        if (quantidadeAtual + quantidadeDevolvida >= 0) {
+            emprestimo.getMaterial().setQuantidade(quantidadeAtual + quantidadeDevolvida);
+        } else {
+            emprestimo.getMaterial().setQuantidade(0);
+        }
+    
+        materialDao.update(material.getIdMaterial(), material);
+    
         return emprestimoDao.returnEmprestimo(emprestimo);
-}
+    }
 
 }
