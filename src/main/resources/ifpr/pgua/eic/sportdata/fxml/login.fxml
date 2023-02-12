@@ -18,16 +18,16 @@
          <children>
             <Pane prefHeight="823.0" prefWidth="1366.0">
                <children>
-                  <TextField fx:id="tfUser" layoutX="536.0" layoutY="393.0" maxWidth="300" prefHeight="42.0" prefWidth="300.0" promptText="C.P.F" />
-                  <Button layoutX="536.0" layoutY="530.0" onAction="#entrar" prefHeight="42.0" prefWidth="300" text="Entrar" />
+                  <TextField fx:id="tfUser" layoutX="536.0" layoutY="348.0" maxWidth="300" prefHeight="42.0" prefWidth="300.0" promptText="C.P.F" />
+                  <Button layoutX="536.0" layoutY="485.0" onAction="#entrar" prefHeight="42.0" prefWidth="300" text="Entrar" />
                   <HBox alignment="center" />
                   <Hyperlink layoutX="708.0" layoutY="591.0" onAction="#carregaTelaCadastroAluno" prefHeight="23.0" prefWidth="71.0" text="Cadastrar" />
                   <Label layoutX="593.0" layoutY="586.0" prefHeight="33.0" prefWidth="136.0" text="Não tem uma conta?" />
-                  <Label layoutX="523.0" layoutY="304.0" prefHeight="42.0" prefWidth="325.0" text="Entrar no SportData">
+                  <Label layoutX="511.0" layoutY="205.0" prefHeight="42.0" prefWidth="350.0" text="Entrar no SportData">
                      <font>
-                        <Font name="Arial" size="36.0" />
+                        <Font name="Arial Bold" size="36.0" />
                      </font></Label>
-                  <ImageView fitHeight="300.0" fitWidth="431.0" layoutX="533.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+                  <ImageView fitHeight="300.0" fitWidth="431.0" layoutX="533.0" layoutY="-31.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                      <image>
                         <Image url="@imagens/sportdataimage.png" />
                      </image>
@@ -37,8 +37,13 @@
                         <Image url="@imagens/ifpr_logo.png" />
                      </image>
                   </ImageView>
-                  <PasswordField fx:id="tfPassword" layoutX="536.0" layoutY="463.0" prefHeight="42.0" prefWidth="300.0" promptText="Senha" />
-                  <Button layoutX="223.0" layoutY="152.0" mnemonicParsing="false" onAction="#carregaTelaGeral" prefHeight="277.0" prefWidth="103.0" text="geral" />
+                  <PasswordField fx:id="tfPassword" layoutX="536.0" layoutY="418.0" prefHeight="42.0" prefWidth="300.0" promptText="Senha" />
+                  <Label layoutX="642.0" layoutY="269.0" prefHeight="51.0" prefWidth="88.0" text="Aluno">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btVoltar" layoutX="536.0" layoutY="536.0" onAction="#carregaTelaPrincipal" prefHeight="42.0" prefWidth="300" text="Voltar" />
                
                </children>
             </Pane>

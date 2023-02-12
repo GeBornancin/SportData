@@ -26,6 +26,10 @@ public class TelaAdmin extends BaseController implements Initializable {
     private void carregaTelaGeral(){
         App.changeScreenRegion("GERAL", BorderPaneRegion.CENTER);
     }
+    @FXML
+    private void carregaTelaLoginAdmin(){
+        App.changeScreenRegion("LOGINADMIN", BorderPaneRegion.CENTER);
+    }
 
     
 
@@ -191,6 +195,12 @@ public class TelaAdmin extends BaseController implements Initializable {
     
     public void limparMaterial(){
         viewModel.limparMaterial();
+    }
+
+    @FXML
+    public void encerrarSessao(){
+        viewModel.encerrarSessaoAdministrador();
+        carregaTelaLoginAdmin();
     }
 
 }

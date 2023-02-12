@@ -32,8 +32,12 @@ public class EmprestimosRepository {
 
     public Result cadastrar(LocalDateTime dataEmprestimo, Aluno aluno, Material material, int quantidadeEmprestada, LocalDateTime dataDevolucao){
         
+     
+
         Emprestimo emprestimo = new Emprestimo(aluno, material, quantidadeEmprestada, dataEmprestimo, dataDevolucao);
-       
+        
+        material.setQuantidade(material.getQuantidade() - quantidadeEmprestada);
+        materialDao.update(quantidadeEmprestada ,material);
         
         return emprestimoDao.create(emprestimo);
 
@@ -54,7 +58,9 @@ public class EmprestimosRepository {
         emprestimos = emprestimoDao.getAll();
 
         for(Emprestimo emprestimo:emprestimos){
+            
             emprestimo.setAluno(carregaAlunoEmprestimo(emprestimo.getIdEmprestimo()));
+            
             emprestimo.setMaterial(carregaMaterialEmprestimo(emprestimo.getIdEmprestimo()));
         }
         
@@ -62,5 +68,17 @@ public class EmprestimosRepository {
 
     }
 
+    public Result devolver(Emprestimo emprestimo){
+
+        emprestimo.setDataDevolucao(LocalDateTime.now());
+
+        Material material =emprestimo.getMaterial();
+        int quantidadeAtual = emprestimo.getMaterial().getQuantidade();
+        emprestimo.getMaterial().setQuantidade(quantidadeAtual  + emprestimo.getQuantidadeEmprestada());
+
+        materialDao.update(material.getIdMaterial(),material);
+
+        return emprestimoDao.returnEmprestimo(emprestimo);
+}
 
 }

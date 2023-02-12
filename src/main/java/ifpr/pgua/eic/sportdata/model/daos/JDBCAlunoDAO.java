@@ -38,7 +38,7 @@ public class JDBCAlunoDAO implements AlunoDAO {
             return Result.success("Aluno criado com sucesso.");
 
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println(" Erro no criar Aluno" + e.getMessage());
             return Result.fail(e.getMessage());
         }
 	}
@@ -66,7 +66,7 @@ public class JDBCAlunoDAO implements AlunoDAO {
         return Result.success("Aluno atualizado com sucesso.");
 
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println(" Erro no Atualizar Aluno" + e.getMessage());
             return Result.fail(e.getMessage());
         }
 
@@ -107,7 +107,7 @@ public class JDBCAlunoDAO implements AlunoDAO {
             return alunos;
 
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println(" Erro no listAll Aluno" + e.getMessage());
             return null;
         }
        
@@ -116,7 +116,7 @@ public class JDBCAlunoDAO implements AlunoDAO {
 	@Override
 	public Aluno getByIdAluno(int idAluno) {
 
-		Aluno aluno = null;
+		
         try{
             //criando uma conexão
             Connection con = fabricaConexoes.getConnection(); 
@@ -126,7 +126,8 @@ public class JDBCAlunoDAO implements AlunoDAO {
             pstm.setInt(1, idAluno);
 
             ResultSet rs = pstm.executeQuery();
-            
+            Aluno aluno = null;
+
             while(rs.next()){
                 aluno = buildFrom(rs);
             }
@@ -135,37 +136,37 @@ public class JDBCAlunoDAO implements AlunoDAO {
             rs.close();
             pstm.close();
             con.close();
+           
+            return aluno;
 
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println(" Erro no getBtIdAluno Aluno" + e.getMessage());
             return null;
         }
-        return aluno;
+        
 	}
 
     @Override
     public Aluno getAlunoFromEmprestimo(int idEmprestimo) {
         Aluno a = null;
-        try{
-
+        try {
             Connection con = fabricaConexoes.getConnection();
-
-            PreparedStatement pstm = con.prepareStatement("SELECT idAluno FROM pi_emprestimo WHERE idAluno=?");
+            PreparedStatement pstm = con.prepareStatement("SELECT idAluno FROM pi_emprestimo WHERE idEmprestimo=?");
 
             pstm.setInt(1, idEmprestimo);
 
             ResultSet resultSetIdAluno = pstm.executeQuery();
-            resultSetIdAluno.next();
 
-            int idAluno = resultSetIdAluno.getInt("idAluno");
-
-            a = getByIdAluno(idAluno);
+            if (resultSetIdAluno.next()) {
+                int idAluno = resultSetIdAluno.getInt("idAluno");
+                a = getByIdAluno(idAluno);
+            }
 
             resultSetIdAluno.close();
             pstm.close();
             con.close();
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return a;
@@ -188,7 +189,7 @@ public class JDBCAlunoDAO implements AlunoDAO {
             return Result.success("apagado");
                 
             }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println(" Erro no detele Aluno" + e.getMessage());
             return null;
         }
         
@@ -221,7 +222,7 @@ public class JDBCAlunoDAO implements AlunoDAO {
                 
     
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.out.println(" Erro no Login" + e.getMessage());
                 throw new RuntimeException(e);
             }finally {
                 if (con != null) {

@@ -16,6 +16,15 @@ public class TelaPrincipal extends BaseController {
         App.changeScreenRegion("LOGIN", BorderPaneRegion.CENTER);
 
     } 
+    @FXML
+    private void carregaTelaLoginAdmin(){
+        App.changeScreenRegion("LOGINADMIN", BorderPaneRegion.CENTER);
+
+    } 
+    @FXML
+   private void carregaTelaPrincipal(){
+        App.changeScreenRegion("PRINCIPAL", BorderPaneRegion.CENTER);
+   }
 
     @FXML
     private Button iconid;

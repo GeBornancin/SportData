@@ -50,12 +50,17 @@ public class Material {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
-    
+
+
 
     @Override
     public String toString() {
-        return nomeMaterial;
+        return "Material [idMaterial=" + idMaterial + ", nomeMaterial=" + nomeMaterial + ", quantidade=" + quantidade
+                + "]";
     }
+    
+
+    
    
     
 }

@@ -16,7 +16,12 @@
     -fx-background-radius: 7;
     -fx-focus-traversable:true;
 }
+.btSair:hover{
+    
+    
+    
 
+}
 
 .label{
     -fx-text-fill: #015351

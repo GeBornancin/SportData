@@ -34,10 +34,8 @@
 }
 
 .button:hover{
-    
 
     -fx-background-color:rgba(38, 45, 64, 0.389);
-
     -fx-background-radius: 7;
     -fx-border-radius: 5;
     -fx-effect: dropshadow(gaussian, rgba(18, 174, 65, 0.978), 0.3, 0.3, 0.0, 0.0);

@@ -63,11 +63,11 @@ public class AlunosRepository {
 
     }
 
-    public Aluno getAlunoByCpf(String cpf){
+    public Aluno getAlunoByNome(String nomeAluno){
         Aluno aluno = null;
 
         for(Aluno a: alunos){
-            if(a.getCpf().equals(cpf)){
+            if(a.getNomeAluno().equals(nomeAluno)){
                 aluno = a;
             }
         }

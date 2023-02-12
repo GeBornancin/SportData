@@ -1,9 +1,6 @@
 package ifpr.pgua.eic.sportdata.controllers.ViewModels;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import ifpr.pgua.eic.sportdata.model.entities.Aluno;
 import ifpr.pgua.eic.sportdata.model.entities.Material;
 import ifpr.pgua.eic.sportdata.model.entities.Emprestimo;
@@ -20,79 +17,95 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 public class TelaGeralViewModel {
 
     private StringProperty spMaterial = new SimpleStringProperty();
     private StringProperty spQuantidade = new SimpleStringProperty();
     private StringProperty spAluno = new SimpleStringProperty();
+    private StringProperty operacao = new SimpleStringProperty("Editar");
+    private BooleanProperty podeEditar = new SimpleBooleanProperty(true);
+    private BooleanProperty desativado = new SimpleBooleanProperty(true);
 
-
-    
-    private ObjectProperty<Material> materialProperty = new SimpleObjectProperty<>();
-    private ObjectProperty<Aluno> alunoProperty = new SimpleObjectProperty<>();
-
-    private ObservableList<Emprestimo> emprestimos = FXCollections.observableArrayList();
     private ObservableList<EmprestimoRow> obsEmprestimos = FXCollections.observableArrayList();
-    private ObservableList<Material> materiais = FXCollections.observableArrayList();
     private ObservableList<MaterialRow> obsMateriais = FXCollections.observableArrayList();
-    private ObservableList<AlunoRow> obsAlunos = FXCollections.observableArrayList();
-    
-    private ObjectProperty<EmprestimoRow> dataEmprestimoProperty = new SimpleObjectProperty<>();
+
     private ObjectProperty<MaterialRow> materialSelecionadoProperty = new SimpleObjectProperty<>();
-
-    public ObjectProperty<MaterialRow> getMaterialSelecionadoProperty(){
-		return materialSelecionadoProperty;
-    }
-
-    public ObjectProperty<EmprestimoRow> getDataEmprestimopProperty(){
-        return dataEmprestimoProperty;
-    }
-    
+    private ObjectProperty<EmprestimoRow> emprestimoSelecionadoProperty = new SimpleObjectProperty<>();
 
     private MateriaisRepository materiaisRepository;
     private AlunosRepository alunosRepository;
     private EmprestimosRepository emprestimosRepository;
-    
+
+    Alert alert = new Alert(Alert.AlertType.NONE);
 
     public TelaGeralViewModel(AlunosRepository alunosRepository,
             MateriaisRepository materiaisRepository,
-            EmprestimosRepository emprestimosRepository){
+            EmprestimosRepository emprestimosRepository) {
 
         this.alunosRepository = alunosRepository;
         this.materiaisRepository = materiaisRepository;
         this.emprestimosRepository = emprestimosRepository;
 
-        
-        
-        // dataDevolucao = LocalDateTime.now();
         updateListMaterial();
         updateListEmprestimo();
     }
 
-
-    
-    public ObservableList<Emprestimo> getEmprestimos() {
-
-        return this.emprestimos;
+    /* Tabela de Materiais disponiveis */
+    public ObjectProperty<MaterialRow> getMaterialSelecionadoProperty() {
+        return materialSelecionadoProperty;
     }
-
 
     public ObservableList<MaterialRow> getMateriais() {
 
         return this.obsMateriais;
     }
 
-    public ObservableList<AlunoRow> getAlunos(){
-        return this.obsAlunos;
-    }
-
-   
     private void updateListMaterial() {
         obsMateriais.clear();
         for (Material m : materiaisRepository.listarMaterial()) {
             obsMateriais.add(new MaterialRow(m));
         }
+    }
+    /* Componentes Tela para emprestrar */
+
+    public StringProperty getMaterial() {
+
+        return spMaterial;
+    }
+
+    public StringProperty getQuantidadeProperty() {
+        return spQuantidade;
+    }
+
+    public StringProperty getAlunoStringProperty() {
+        return spAluno;
+    }
+
+    public BooleanProperty podeEditarProperty() {
+
+        return podeEditar;
+    }
+
+    public StringProperty operacaoProperty() {
+
+        return operacao;
+    }
+
+    /* Tabela de Emprestimos */
+
+    public ObjectProperty<EmprestimoRow> getEmprestimoSelecionadoProperty() {
+        return emprestimoSelecionadoProperty;
+    }
+
+    public ObservableList<EmprestimoRow> getEmprestimos() {
+
+        return this.obsEmprestimos;
+    }
+
+    public BooleanProperty desativadoProperty() {
+        return desativado;
     }
 
     private void updateListEmprestimo() {
@@ -102,32 +115,11 @@ public class TelaGeralViewModel {
         }
     }
 
+    /* Métodos empréstimo */
 
+    public Result emprestarItem() {
 
-    public StringProperty getMaterial(){
-
-        return  spMaterial;
-    }
-
-    public StringProperty getQuantidadeProperty(){
-        return spQuantidade;
-    }
-
-    public StringProperty getAlunoStringProperty(){
-        return spAluno;
-    }
-
-    public ObjectProperty<Aluno> getAlunoProperty(){
-        return alunoProperty;
-    }
-
-    public ObjectProperty<Material> getMaterialProperty(){
-        return materialProperty;
-    }
-
-    public void emprestarItem(){
-
-        Aluno aluno = alunosRepository.getAlunoByCpf(spAluno.getValue());
+        Aluno aluno = alunosRepository.getAlunoByNome(spAluno.getValue());
         Material material = materiaisRepository.getMaterialByNome(spMaterial.getValue());
         int quantidadeEmprestada = Integer.valueOf(spQuantidade.getValue());
         LocalDateTime dataEmprestimo = LocalDateTime.now();
@@ -135,21 +127,87 @@ public class TelaGeralViewModel {
 
         emprestimosRepository.cadastrar(dataEmprestimo, aluno, material, quantidadeEmprestada, dataDevolucao);
 
+        updateListMaterial();
         updateListEmprestimo();
         limpar();
 
+        return null;
+    }
+
+    public void preencheTextFieldsParaAtualizar() {
+
+        operacao.setValue("Editar");
+        podeEditar.setValue(false);
+
+        if (materialSelecionadoProperty.get() != null) {
+            Material material = materialSelecionadoProperty.get().getMaterial();
+            Aluno aluno = Sessao.getInstance().getAluno();
+
+            spMaterial.setValue(material.getNomeMaterial());
+            spAluno.setValue(aluno.getNomeAluno());
+        }
+    }
+
+    public void devolver() {
+
+        Emprestimo emprestimo = emprestimoSelecionadoProperty.get().getEmprestimo();
+        Aluno alunoDaSessao = Sessao.getInstance().getAluno();
+
+        
+        if (emprestimo.getAluno().getNomeAluno().equals(alunoDaSessao.getNomeAluno())) {
+            if (emprestimo.getDataDevolucao() == null) {
+                emprestimosRepository.devolver(emprestimo);
+
+                alert.setAlertType(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Material Devolvido");
+                alert.showAndWait();
+
+          
+                updateListMaterial();
+                updateListEmprestimo();
+                limpar();
+              } else {
+                alert.setAlertType(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Material já foi devolvido");
+                alert.showAndWait();
+                desativado.setValue(true);
+              }
+        } else {
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Este emprestimo não pertence ao Aluno: "+ alunoDaSessao);
+            alert.showAndWait();
+            desativado.setValue(true);
+
+        }
 
     }
 
-    public void limpar(){
+    public void atualizarEmprestimo() {
+        desativado.setValue(false);
+    }
+
+    public void encerrarSessao() {
+        Sessao sessao = Sessao.getInstance();
+        Aluno aluno = sessao.getAluno();
+        
+        alert.setAlertType(Alert.AlertType.INFORMATION);
+        if (aluno != null) {
+            alert.setHeaderText(aluno.getNomeAluno() + " deslogado com sucesso!");
+        } else {
+            alert.setHeaderText("Não há usuário logado");
+        }
+        alert.showAndWait();
+        sessao.setAluno(null);
+        
+    }
+
+    public void limpar() {
 
         spAluno.setValue("");
         spMaterial.setValue("");
         spQuantidade.setValue("");
+        desativado.setValue(true);
     }
 
-    
-   
-    
 
 }

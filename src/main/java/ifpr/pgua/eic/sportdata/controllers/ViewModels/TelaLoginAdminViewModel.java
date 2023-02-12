@@ -1,29 +1,22 @@
 package ifpr.pgua.eic.sportdata.controllers.ViewModels;
 
-
-
+import ifpr.pgua.eic.sportdata.model.entities.Aluno;
+import ifpr.pgua.eic.sportdata.model.entities.Sessao;
+import ifpr.pgua.eic.sportdata.model.repositories.AlunosRepository;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
 
-import java.text.ParseException;
-
-import javax.swing.text.MaskFormatter;
-
-import ifpr.pgua.eic.sportdata.model.entities.Aluno;
-import ifpr.pgua.eic.sportdata.model.repositories.AlunosRepository;
-import ifpr.pgua.eic.sportdata.model.entities.Sessao;
-
-public class TelaLoginViewModel {
-
+public class TelaLoginAdminViewModel {
+    
     private AlunosRepository alunosRepository;
-    private Aluno alunoKey;
 
-    public TelaLoginViewModel(AlunosRepository alunosRepository, Aluno alunoKey) {
+    public TelaLoginAdminViewModel(AlunosRepository alunosRepository){
+
         this.alunosRepository = alunosRepository;
-        this.alunoKey = alunoKey;
-        
+
     }
+
 
     private StringProperty spUser = new SimpleStringProperty();
     private StringProperty spPassword = new SimpleStringProperty();
@@ -37,35 +30,36 @@ public class TelaLoginViewModel {
         return spPassword;
     }
 
-
-    public boolean entrar(){
-
+    public boolean entrarComoAdministrador() {
         String user = spUser.getValue();
         String password = spPassword.getValue();
         Sessao sessao = Sessao.getInstance();
 
-        alunoKey = alunosRepository.loginAluno(user, password);
-
-        if(alunoKey != null){
+        if (user.equals("admin") && password.equals("admin")) {
             alert.setAlertType(Alert.AlertType.INFORMATION);
-            sessao.setAluno(alunoKey);
-            System.out.println(Sessao.getInstance().getAluno());
-            alert.setHeaderText("Bem-vindo "+Sessao.getInstance().getAluno() );
+            sessao.setAluno(null);
+            sessao.setAdmin(true);
+            alert.setHeaderText("Bem-vindo, administrador");
             alert.showAndWait();
+
             return true;
-        }else if(user == null){
+        } else if (user == null) {
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setHeaderText("Campo Usuario Vazio");
             alert.showAndWait();
             return false;
-        }else if(password == null){
+
+        } else if (password == null) {
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setHeaderText("Campo Senha Vazio");
             alert.showAndWait();
             return false;
-        }else {
+        } else {
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setHeaderText("Usuario ou Senha Incorretos");
+            alert.showAndWait();
             return false;
         }
     }
-    
+
 }

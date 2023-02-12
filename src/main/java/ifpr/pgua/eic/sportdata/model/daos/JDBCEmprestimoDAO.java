@@ -33,33 +33,62 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO{
 
     @Override
     public Result create(Emprestimo emprestimo) {
+
         try{
             Connection con = fabricaConexoes.getConnection();
-           
-            PreparedStatement pstm = con.prepareStatement
-             ("INSERT INTO pi_emprestimo(dataEmprestimo, idAluno, idMaterial, quantidadeEmprestada, dataDevolucao) VALUES (?,?,?,?,?)");
-           
-            
-            
+
+            PreparedStatement pstm = con.prepareStatement("INSERT INTO pi_emprestimo(dataEmprestimo, idAluno, idMaterial, quantidadeEmprestada, dataDevolucao) VALUES (?,?,?,?,?)");
+
+            System.out.println(emprestimo.getDataEmprestimo());
+            System.out.println(emprestimo.getAluno().getIdAluno());
+            System.out.println(emprestimo.getMaterial().getIdMaterial());
+            System.out.println(emprestimo.getQuantidadeEmprestada());
 
             pstm.setTimestamp(1, Timestamp.valueOf(emprestimo.getDataEmprestimo()));
-            pstm.setInt(2, emprestimo.getAluno().getIdAluno());  
+            pstm.setInt(2, emprestimo.getAluno().getIdAluno());
             pstm.setInt(3, emprestimo.getMaterial().getIdMaterial());
             pstm.setInt(4, emprestimo.getQuantidadeEmprestada());
             pstm.setTimestamp(5, null);
 
-            pstm.execute();
-            pstm.close();
-            con.close();
-            
-            
-            return Result.success("Emprestimo criado com sucesso");
-
+            int result = pstm.executeUpdate();
+            if (result > 0) {
+                pstm.close();
+                con.close();
+                return Result.success("Emprestimo criado com sucesso");
+            } else {
+                pstm.close();
+                con.close();
+                return Result.fail("Não foi possível criar o empréstimo");
+            }
         }catch(SQLException e){
             return Result.fail(e.getMessage());
         }
+
     }
 
+    @Override
+public Result returnEmprestimo(Emprestimo emprestimo) {
+    try {
+        Connection con = fabricaConexoes.getConnection();
+
+        PreparedStatement pstm = con.prepareStatement("UPDATE pi_emprestimo SET dataDevolucao = ? WHERE idEmprestimo = ?");
+        pstm.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+        pstm.setInt(2,emprestimo.getIdEmprestimo());
+        
+
+        int result = pstm.executeUpdate();
+        if (result == 0) {
+            return Result.fail("Emprestimo não encontrado.");
+        }
+
+        pstm.close();
+        con.close();
+
+        return Result.success("Emprestimo devolvido com sucesso");
+    } catch (SQLException e) {
+        return Result.fail(e.getMessage());
+    }
+}
     
     private Emprestimo buildFrom(ResultSet rs) throws SQLException {
        
@@ -104,7 +133,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO{
             return lista;
 
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println(" Erro no getAll Emprestimo" + e.getMessage());
             return Collections.emptyList();
         }
     }

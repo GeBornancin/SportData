@@ -4,6 +4,7 @@ import com.mysql.cj.conf.IntegerProperty;
 
 import ifpr.pgua.eic.sportdata.model.entities.Aluno;
 import ifpr.pgua.eic.sportdata.model.entities.Material;
+import ifpr.pgua.eic.sportdata.model.entities.Sessao;
 import ifpr.pgua.eic.sportdata.model.repositories.AlunosRepository;
 import ifpr.pgua.eic.sportdata.model.repositories.MateriaisRepository;
 import ifpr.pgua.eic.sportdata.model.results.Result;
@@ -16,6 +17,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 public class TelaAdminViewModel {
 
@@ -39,6 +41,7 @@ public class TelaAdminViewModel {
      * de um dos botões da tela e também se os textfields tfNome e tfCpf podem
      * ser editados.
      */
+    Alert alert = new Alert(Alert.AlertType.NONE);
 
     private BooleanProperty podeEditar = new SimpleBooleanProperty(true);
     private StringProperty operacao = new SimpleStringProperty("Editar");
@@ -256,6 +259,8 @@ public class TelaAdminViewModel {
 
     }
 
+    
+
     private void updateListAluno() {
         obsAlunos.clear();
         for (Aluno a : alunosRepository.listarAluno()) {
@@ -263,4 +268,19 @@ public class TelaAdminViewModel {
         }
 
     }
+
+    public void encerrarSessaoAdministrador() {
+        Sessao sessao = Sessao.getInstance();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        if (sessao.isAdmin()) {
+            alert.setHeaderText("Administrador deslogado com sucesso!");
+            sessao.setAluno(null);
+            sessao.setAdmin(false);
+        } else {
+            alert.setHeaderText("Não há administrador logado");
+        }
+        alert.showAndWait();
+    }
+    
 }

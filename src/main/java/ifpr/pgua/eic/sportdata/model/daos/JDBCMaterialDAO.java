@@ -43,7 +43,7 @@ public class JDBCMaterialDAO implements MaterialDAO {
 
             return Result.success("Material criado com sucesso");
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println(" Erro no create Material" + e.getMessage());
             return Result.fail(e.getMessage());
         }
 	}
@@ -69,7 +69,7 @@ public class JDBCMaterialDAO implements MaterialDAO {
 
 
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println(" Erro no update Material" + e.getMessage());
             return Result.fail(e.getMessage());
         }
 		
@@ -108,7 +108,7 @@ public class JDBCMaterialDAO implements MaterialDAO {
             return materiais;
 
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println(" Erro no listAll Material" + e.getMessage());
             return Collections.emptyList();
         }
 	}
@@ -137,7 +137,7 @@ public class JDBCMaterialDAO implements MaterialDAO {
             return material;
 
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println(" Erro no getById Material" + e.getMessage());
             return null;
         }
 	}
@@ -160,7 +160,7 @@ public class JDBCMaterialDAO implements MaterialDAO {
             return Result.success("apagado");
                 
             }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println(" Erro no detele Material" + e.getMessage());
             return null;
         }
         
@@ -171,28 +171,23 @@ public class JDBCMaterialDAO implements MaterialDAO {
     public Material getMaterialFromEmprestimo(int idEmprestimo) {
         Material m = null;
         try{
-
-            Connection con = fabricaConexoes.getConnection();
-
-            PreparedStatement pstm = con.prepareStatement("SELECT idMaterial FROM pi_emprestimo WHERE idMaterial=?");
-
-            pstm.setInt(1, idEmprestimo);
-
-            ResultSet resultSetIdMaterial = pstm.executeQuery();
-            resultSetIdMaterial.next();
-
+        Connection con = fabricaConexoes.getConnection();
+        PreparedStatement pstm = con.prepareStatement("SELECT idMaterial FROM pi_emprestimo WHERE idEmprestimo=?");
+        pstm.setInt(1, idEmprestimo);
+        ResultSet resultSetIdMaterial = pstm.executeQuery();
+        if (resultSetIdMaterial.next()) {
             int idMaterial = resultSetIdMaterial.getInt("idMaterial");
-
             m = getById(idMaterial);
-
-            resultSetIdMaterial.close();
-            pstm.close();
-            con.close();
-
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
         }
-        return m;
+        resultSetIdMaterial.close();
+        pstm.close();
+        con.close();
+
+    }catch(SQLException e){
+        System.out.println("Ocorreu um erro ao obter o material do empréstimo: " + e.getMessage());
+    }
+    return m;
+    
     }
     
 }

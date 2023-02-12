@@ -83,4 +83,12 @@ public class Emprestimo {
             public void setQuantidadeEmprestada(int quantidadeEmprestada) {
             this.quantidadeEmprestada = quantidadeEmprestada;
         }
+
+            @Override
+            public String toString() {
+                return "Emprestimo [idEmprestimo=" + idEmprestimo + ", aluno=" + aluno + ", material=" + material
+                        + ", quantidadeEmprestada=" + quantidadeEmprestada + ", dataEmprestimo=" + dataEmprestimo
+                        + ", dataDevolucao=" + dataDevolucao + "]";
+            }
+       
 }

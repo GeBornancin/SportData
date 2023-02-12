@@ -21,7 +21,7 @@ public class TelaCadastroAlunoViewModel {
     private StringProperty turmaProperty = new SimpleStringProperty();
     private StringProperty senhaProperty = new SimpleStringProperty();
 
-   
+    Alert alert = new Alert(Alert.AlertType.NONE);
     
     
     private AlunosRepository repository;
@@ -52,7 +52,7 @@ public class TelaCadastroAlunoViewModel {
 
     public void cadastrar() {
 
-        Alert alert = new Alert(Alert.AlertType.NONE);
+        
 
         
 
