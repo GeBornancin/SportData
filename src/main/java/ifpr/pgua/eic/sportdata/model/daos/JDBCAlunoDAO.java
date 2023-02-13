@@ -177,8 +177,13 @@ public class JDBCAlunoDAO implements AlunoDAO {
         try{
 
             Connection con = fabricaConexoes.getConnection(); 
+            PreparedStatement pstmDeleteEmprestimo = con.prepareStatement("DELETE FROM pi_emprestimo WHERE idAluno=?");
             PreparedStatement pstm = con.prepareStatement("DELETE FROM pi_aluno WHERE idAluno=?");
             
+            pstmDeleteEmprestimo.setInt(1, idAluno);
+            pstmDeleteEmprestimo.executeUpdate();
+
+
             pstm.setInt(1, idAluno);
 
             pstm.execute();

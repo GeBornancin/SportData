@@ -89,7 +89,7 @@ public class TelaAdmin extends BaseController implements Initializable {
     private TextField tfTurma;
 
     @FXML 
-    private TextField tfSenha;
+    private PasswordField tfSenha;
     
     @FXML 
     private Button btEditarAluno;
@@ -131,8 +131,7 @@ public class TelaAdmin extends BaseController implements Initializable {
         tbcNomeAluno.setCellValueFactory(new PropertyValueFactory<>("nomeAluno"));
         tbcCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
         tbcTurma.setCellValueFactory(new PropertyValueFactory<>("turma"));
-        tbcSenha.setCellValueFactory(new PropertyValueFactory<>("senha"));
-
+    
         tbAlunos.setItems(viewModel.getAlunos());
 
         viewModel.selecionadoProperty().bind(tbAlunos.getSelectionModel().selectedItemProperty());
