@@ -119,7 +119,7 @@ public class TelaGeralViewModel {
 
     public Result emprestarItem() {
 
-        Aluno aluno = alunosRepository.getAlunoByNome(spAluno.getValue());
+        Aluno aluno = Sessao.getInstance().getAluno();
         Material material = materiaisRepository.getMaterialByNome(spMaterial.getValue());
         int quantidadeEmprestada = Integer.valueOf(spQuantidade.getValue());
         LocalDateTime dataEmprestimo = LocalDateTime.now();
